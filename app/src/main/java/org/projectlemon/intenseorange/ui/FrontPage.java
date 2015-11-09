@@ -1,4 +1,4 @@
-package net.projectlemon.intenseorange.ui;
+package org.projectlemon.intenseorange.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import net.projectlemon.intenseorange.R;
+import org.projectlemon.intenseorange.R;
 
 public class FrontPage extends AppCompatActivity {
 

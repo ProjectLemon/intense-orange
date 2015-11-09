@@ -1,4 +1,4 @@
-package net.projectlemon.intenseorange;
+package org.projectlemon.intenseorange;
 
 import org.junit.Test;
 

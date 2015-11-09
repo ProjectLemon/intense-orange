@@ -1,4 +1,4 @@
-package net.projectlemon.intenseorange;
+package org.projectlemon.intenseorange;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

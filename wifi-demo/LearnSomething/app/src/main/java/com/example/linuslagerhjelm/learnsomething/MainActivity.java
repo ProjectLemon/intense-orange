@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onFailure(int reasonCode) {
-                textView.setText("Discover peers success");
+                textView.setText("Discover peers failed");
             }
         });
 

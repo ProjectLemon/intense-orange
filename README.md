@@ -4,7 +4,7 @@ Intense orange is a working title for this android party game.
 
 We are currently working on a formal specification for this project so that the purpose of this project will be crystal clear to everyone who likes to contribute.
 
-## We \u2764 contributors
+## We ❤ contributors 
 
 We would love to see you contribute to this project so feel free to do so by open issues, posting comments and submitting pull requests (PQ)
 

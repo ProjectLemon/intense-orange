@@ -13,7 +13,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class MessageHelper {
     private Queue<WifiPackage> messages = new LinkedBlockingQueue<>();
 
-
     public void addMessageToQueue(WifiPackage packageMessage){
         messages.add(packageMessage);
     }

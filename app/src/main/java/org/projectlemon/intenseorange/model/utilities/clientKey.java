@@ -5,6 +5,8 @@ package org.projectlemon.intenseorange.model.utilities;
  */
 public class clientKey {
 
+
+
     clientKey(){
 
     }

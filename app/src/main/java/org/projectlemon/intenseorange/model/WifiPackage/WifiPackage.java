@@ -1,4 +1,4 @@
-package org.projectlemon.intenseorange.model.wifiPackage;
+package org.projectlemon.intenseorange.model.WifiPackage;
 
 /**
  * Created by Jenny on 2015-11-11.

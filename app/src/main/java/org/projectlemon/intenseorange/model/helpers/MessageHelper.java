@@ -1,13 +1,9 @@
 package org.projectlemon.intenseorange.model.helpers;
 
-import android.net.wifi.p2p.WifiP2pDevice;
-
 import org.projectlemon.intenseorange.model.Client;
-import org.projectlemon.intenseorange.model.utilities.clientKey;
 import org.projectlemon.intenseorange.model.wifiPackage.WifiPackage;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 

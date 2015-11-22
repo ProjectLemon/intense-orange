@@ -12,8 +12,17 @@ import org.projectlemon.intenseorange.controller.interfaces.NerworkControllerInt
 import org.projectlemon.intenseorange.model.network.WifiDirectReciever;
 import org.projectlemon.intenseorange.model.utilities.Role;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 
 /**
+ * Class: NetworkController
+ * Purpose: Implements the NetworkController interface. It abstracts away the code
+ *          for using the network api. It takes care of initializing a wifi direct connection,
+ *          discover, connecting to and communicate with other devices
+ *
  * Created by Jenny on 2015-11-11.
  */
 public class NetworkController implements NerworkControllerInterface {
@@ -26,7 +35,15 @@ public class NetworkController implements NerworkControllerInterface {
     private Runnable callbackFunction;
     private WifiP2pDeviceList peerList;
     private WifiP2pManager.PeerListListener peerListener;
+    private ServerSocket serverSocket;
+    private Socket socket;
 
+    /**
+     * Creates a new NetworkController to be used for network communication between devices
+     * @param context The activity that will communicate with the network
+     * @param role States weather the device is the server or a client
+     * @param function The function that will be called when data is sent to this device
+     */
     public NetworkController (Context context, Role role, Runnable function ) {
         this.context = context;
         this.role = role;
@@ -37,19 +54,31 @@ public class NetworkController implements NerworkControllerInterface {
         mChannel = mManager.initialize(context, Looper.getMainLooper(), null);
         wifiReciever = new WifiDirectReciever(mManager, mChannel, context, peerListener);
         setupIntentFilter();
-
+        setupSockets();
     }
 
+
+    /**
+     * Registers this object as a broadcast receiver for wifi broadcasts within the system
+     */
     @Override
     public void onResume() {
         context.registerReceiver(wifiReciever, intentFilter);
     }
 
+    /**
+     * Unregister this object as a broadcast receiver for wifi broadcasts within the system
+     */
     @Override
     public void onPause() {
         context.unregisterReceiver(wifiReciever);
     }
 
+    /**
+     * Upon calling this method. The device will open a wifi direct connection with surrounding
+     * devices that is part of the game. Depending on it's role, the device will act as a server
+     * or as a client that connects to a group.
+     */
     @Override
     public void start() {
         mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
@@ -71,18 +100,41 @@ public class NetworkController implements NerworkControllerInterface {
 
     }
 
+    /**
+     * Called to close the connection. This method should only be called when everything is
+     * finished and the connection not is to be opened since it would cause a renegotiation
+     * of roles and connection establishment. Which is time and battery consuming.
+     *
+     * Use pause instead to save battery
+     */
     @Override
     public void close() {
 
     }
 
+    /**
+     * This method will send the specified data to the connected devices
+     * @param data the data to send
+     */
     @Override
-    public void sendData() {
+    public void sendData(byte[] data) {
 
     }
 
     private void connectToGroupOwner() {
 
+    }
+
+    private void setupSockets() {
+        if (role == Role.SERVER) {
+            try {
+                serverSocket = new ServerSocket();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            socket = new Socket();
+        }
     }
 
     private void setupIntentFilter() {

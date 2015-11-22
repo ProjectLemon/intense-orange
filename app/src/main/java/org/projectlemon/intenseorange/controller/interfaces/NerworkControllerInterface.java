@@ -9,5 +9,5 @@ public interface NerworkControllerInterface {
     void start();
     void pause();
     void close();
-    void sendData();
+    void sendData(byte[] data);
 }

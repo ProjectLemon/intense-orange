@@ -10,7 +10,7 @@
     tools:context=".ui.screen.StartScreen">
 
     <TextView android:id="@+id/textView"
-        android:text="Hello World!"
+        android:text="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -18,9 +18,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
+        android:onClick="startGame"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="startGame" />
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_marginLeft="46dp"
+        android:layout_marginStart="46dp" />
+
+    <ListView android:id="@+id/listView"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorBlack" />
 
 </RelativeLayout>
 

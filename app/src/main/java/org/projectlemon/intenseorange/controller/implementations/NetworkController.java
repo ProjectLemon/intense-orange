@@ -143,6 +143,7 @@ public class NetworkController implements NerworkControllerInterface {
     private void connectToGroupOwner() {
         //Collection<WifiP2pDevice> devices = peers.getDeviceList();
         WifiP2pConfig config = new WifiP2pConfig();
+        Toast.makeText(context, "Trying to connect to group", Toast.LENGTH_SHORT).show();
         for (WifiP2pDevice device: peerList) {
             if(device.isGroupOwner()) {
                 config.deviceAddress = device.deviceAddress;
@@ -173,8 +174,11 @@ public class NetworkController implements NerworkControllerInterface {
                 }
                 if(role == Role.CLIENT)
                     connectToGroupOwner();
-                else if(role == Role.SERVER)
+                else if(role == Role.SERVER) {
+                    Toast.makeText(context, "Trying to create group", Toast.LENGTH_SHORT).show();
                     mManager.createGroup(mChannel, null);
+                }
+
             }
         };
     }

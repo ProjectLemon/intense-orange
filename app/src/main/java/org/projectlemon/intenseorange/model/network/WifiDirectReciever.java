@@ -87,6 +87,7 @@ public class WifiDirectReciever extends BroadcastReceiver {
 
     private void handlePeersChangedAction () {
         try {
+            Toast.makeText(context, "Peers changed", Toast.LENGTH_SHORT).show();
             mManager.requestPeers(mChannel, peerListener);
         } catch (NullPointerException e) {
             Toast.makeText(context, "Trying to resolve network error", Toast.LENGTH_SHORT).show();

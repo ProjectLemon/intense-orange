@@ -9,6 +9,7 @@ import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
@@ -21,7 +22,9 @@ import org.projectlemon.intenseorange.model.utilities.Role;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -40,8 +43,7 @@ public class NetworkController implements NerworkControllerInterface {
     private Context context;
     private Role role;
     private CallbackObject callbackFunction;
-    private WifiP2pDeviceList peerList;
-    private WifiP2pManager.PeerListListener peerListener;
+    private List<WifiP2pDevice> peerList = new ArrayList();
     public Server server;
     public Client client;
 
@@ -56,7 +58,7 @@ public class NetworkController implements NerworkControllerInterface {
         this.role = role;
         this.callbackFunction = function;
 
-        peerListener = createPeerListener();
+        WifiP2pManager.PeerListListener peerListener = createPeerListener();
         mManager = (WifiP2pManager)context.getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(context, Looper.getMainLooper(), null);
         wifiReceiver = new WifiDirectReciever(mManager, mChannel, context, peerListener, this);
@@ -139,9 +141,9 @@ public class NetworkController implements NerworkControllerInterface {
     }
 
     private void connectToGroupOwner() {
-        Collection<WifiP2pDevice> devices = peerList.getDeviceList();
+        //Collection<WifiP2pDevice> devices = peers.getDeviceList();
         WifiP2pConfig config = new WifiP2pConfig();
-        for (WifiP2pDevice device: devices) {
+        for (WifiP2pDevice device: peerList) {
             if(device.isGroupOwner()) {
                 config.deviceAddress = device.deviceAddress;
                 config.wps.setup = WpsInfo.PBC;
@@ -164,8 +166,11 @@ public class NetworkController implements NerworkControllerInterface {
         return new WifiP2pManager.PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
-                peerList = peers;
-                Toast.makeText(context, "Somethin happened", Toast.LENGTH_SHORT).show();
+                peerList.clear();
+                peerList.addAll(peers.getDeviceList());
+                if(peerList.size() == 0){
+                    Toast.makeText(context, "No devices found", Toast.LENGTH_SHORT).show();
+                }
                 if(role == Role.CLIENT)
                     connectToGroupOwner();
                 else if(role == Role.SERVER)

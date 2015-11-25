@@ -89,6 +89,7 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void start() {
+        onResume();
         mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {

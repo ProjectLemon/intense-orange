@@ -17,7 +17,9 @@ public class StartScreen extends Screen {
         setContentView(R.layout.activity_start_screen);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.view_list_item);
-        ((ListView) findViewById(R.id.listView)).setAdapter(adapter);
+        adapter.add("Nearby game 1");
+        adapter.add("Nearby game 2");
+        ((ListView) findViewById(R.id.nearby_games_list)).setAdapter(adapter);
     }
 
     public void startGame(View view) {

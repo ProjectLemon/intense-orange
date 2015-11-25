@@ -3,6 +3,9 @@ package org.projectlemon.intenseorange.controller.implementations;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.WpsInfo;
+import android.net.wifi.p2p.WifiP2pConfig;
+import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Looper;
@@ -10,12 +13,15 @@ import android.widget.Toast;
 
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.controller.interfaces.NerworkControllerInterface;
+import org.projectlemon.intenseorange.model.Client;
+import org.projectlemon.intenseorange.model.Server;
 import org.projectlemon.intenseorange.model.network.WifiDirectReciever;
 import org.projectlemon.intenseorange.model.utilities.Role;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Collection;
 
 
 /**
@@ -36,8 +42,8 @@ public class NetworkController implements NerworkControllerInterface {
     private CallbackObject callbackFunction;
     private WifiP2pDeviceList peerList;
     private WifiP2pManager.PeerListListener peerListener;
-    private ServerSocket serverSocket;
-    private Socket socket;
+    public Server server;
+    public Client client;
 
     /**
      * Creates a new NetworkController to be used for network communication between devices
@@ -53,9 +59,8 @@ public class NetworkController implements NerworkControllerInterface {
         peerListener = createPeerListener();
         mManager = (WifiP2pManager)context.getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(context, Looper.getMainLooper(), null);
-        wifiReceiver = new WifiDirectReciever(mManager, mChannel, context, peerListener);
+        wifiReceiver = new WifiDirectReciever(mManager, mChannel, context, peerListener, this);
         setupIntentFilter();
-        setupSockets();
     }
 
 
@@ -93,7 +98,6 @@ public class NetworkController implements NerworkControllerInterface {
                 Toast.makeText(context, "Discover peers failed", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
@@ -135,20 +139,17 @@ public class NetworkController implements NerworkControllerInterface {
     }
 
     private void connectToGroupOwner() {
-        //TODO: Implement
-    }
-
-    private void setupSockets() {
-        if (role == Role.SERVER) {
-            try {
-                serverSocket = new ServerSocket();
-            } catch (IOException e) {
-                e.printStackTrace();
+        Collection<WifiP2pDevice> devices = peerList.getDeviceList();
+        WifiP2pConfig config = new WifiP2pConfig();
+        for (WifiP2pDevice device: devices) {
+            if(device.isGroupOwner()) {
+                config.deviceAddress = device.deviceAddress;
+                config.wps.setup = WpsInfo.PBC;
+                mManager.connect(mChannel, config, null);
             }
-        } else {
-            socket = new Socket();
         }
     }
+
 
     private void setupIntentFilter() {
         intentFilter = new IntentFilter();
@@ -164,7 +165,11 @@ public class NetworkController implements NerworkControllerInterface {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
                 peerList = peers;
-                connectToGroupOwner();
+                System.out.println(peerList.toString());
+                if(role == Role.CLIENT)
+                    connectToGroupOwner();
+                else if(role == Role.SERVER)
+                    mManager.createGroup(mChannel, null);
             }
         };
     }

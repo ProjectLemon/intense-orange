@@ -13,13 +13,15 @@ import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
 public class StartScreen extends Screen {
 
+    private NetworkController networkController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
-        NetworkController nc = new NetworkController(this, Role.CLIENT, null);
-        nc.start();
+        networkController = new NetworkController(this, Role.CLIENT, null);
+        networkController.start();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.view_list_item);
         adapter.add("Nearby game 1");
@@ -30,5 +32,17 @@ public class StartScreen extends Screen {
     public void startGame(View view) {
         Intent intent = new Intent(this, GameSetup.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        networkController.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkController.onPause();
     }
 }

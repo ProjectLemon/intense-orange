@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.projectlemon.intenseorange.R;
+import org.projectlemon.intenseorange.controller.implementations.NetworkController;
+import org.projectlemon.intenseorange.model.utilities.Role;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
 public class StartScreen extends Screen {
@@ -15,6 +17,9 @@ public class StartScreen extends Screen {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
+
+        NetworkController nc = new NetworkController(this, Role.SERVER, null);
+        nc.start();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.view_list_item);
         adapter.add("Nearby game 1");

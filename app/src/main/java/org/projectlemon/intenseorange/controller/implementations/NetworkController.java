@@ -8,6 +8,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Looper;
 import android.widget.Toast;
 
+import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.controller.interfaces.NerworkControllerInterface;
 import org.projectlemon.intenseorange.model.network.WifiDirectReciever;
 import org.projectlemon.intenseorange.model.utilities.Role;
@@ -32,7 +33,7 @@ public class NetworkController implements NerworkControllerInterface {
     private IntentFilter intentFilter;
     private Context context;
     private Role role;
-    private Runnable callbackFunction;
+    private CallbackObject callbackFunction;
     private WifiP2pDeviceList peerList;
     private WifiP2pManager.PeerListListener peerListener;
     private ServerSocket serverSocket;
@@ -44,7 +45,7 @@ public class NetworkController implements NerworkControllerInterface {
      * @param role States weather the device is the server or a client
      * @param function The function that will be called when data is sent to this device
      */
-    public NetworkController (Context context, Role role, Runnable function ) {
+    public NetworkController (Context context, Role role, CallbackObject function ) {
         this.context = context;
         this.role = role;
         this.callbackFunction = function;
@@ -119,6 +120,15 @@ public class NetworkController implements NerworkControllerInterface {
     @Override
     public void sendData(byte[] data) {
 
+    }
+
+    /**
+     * This method will call the handleData()-method with the received data
+     * @param data the data to receive
+     */
+    @Override
+    public void receiveData(byte[] data) {
+        callbackFunction.handleData(data);
     }
 
     private void connectToGroupOwner() {

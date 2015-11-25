@@ -29,7 +29,7 @@ import java.net.Socket;
 public class NetworkController implements NerworkControllerInterface {
     private WifiP2pManager mManager;
     private WifiP2pManager.Channel mChannel;
-    private BroadcastReceiver wifiReciever;
+    private BroadcastReceiver wifiReceiver;
     private IntentFilter intentFilter;
     private Context context;
     private Role role;
@@ -53,7 +53,7 @@ public class NetworkController implements NerworkControllerInterface {
         peerListener = createPeerListener();
         mManager = (WifiP2pManager)context.getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(context, Looper.getMainLooper(), null);
-        wifiReciever = new WifiDirectReciever(mManager, mChannel, context, peerListener);
+        wifiReceiver = new WifiDirectReciever(mManager, mChannel, context, peerListener);
         setupIntentFilter();
         setupSockets();
     }
@@ -64,7 +64,7 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void onResume() {
-        context.registerReceiver(wifiReciever, intentFilter);
+        context.registerReceiver(wifiReceiver, intentFilter);
     }
 
     /**
@@ -72,7 +72,7 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void onPause() {
-        context.unregisterReceiver(wifiReciever);
+        context.unregisterReceiver(wifiReceiver);
     }
 
     /**
@@ -98,7 +98,8 @@ public class NetworkController implements NerworkControllerInterface {
 
     @Override
     public void pause() {
-
+        //TODO: Implement
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
@@ -110,7 +111,8 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void close() {
-
+        //TODO: Implement
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
@@ -119,7 +121,8 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void sendData(byte[] data) {
-
+        //TODO: Implement
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
@@ -132,7 +135,7 @@ public class NetworkController implements NerworkControllerInterface {
     }
 
     private void connectToGroupOwner() {
-
+        //TODO: Implement
     }
 
     private void setupSockets() {

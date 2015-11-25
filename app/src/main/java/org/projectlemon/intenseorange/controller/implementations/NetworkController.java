@@ -95,7 +95,7 @@ public class NetworkController implements NerworkControllerInterface {
 
             @Override
             public void onFailure(int reason) {
-                Toast.makeText(context, "Discover peers failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Unable to search for peers", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -165,7 +165,7 @@ public class NetworkController implements NerworkControllerInterface {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
                 peerList = peers;
-                System.out.println(peerList.toString());
+                Toast.makeText(context, "Somethin happened", Toast.LENGTH_SHORT).show();
                 if(role == Role.CLIENT)
                     connectToGroupOwner();
                 else if(role == Role.SERVER)

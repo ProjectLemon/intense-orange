@@ -33,7 +33,7 @@ public class ByteHelperTest {
     }
 
     @Test
-    public void tryPadToFour(){
+    public void testPad(){
         byte b = 0;
         ByteHelper byteHelper = new ByteHelper(b);
         byteHelper.pad();
@@ -41,11 +41,30 @@ public class ByteHelperTest {
     }
 
     @Test
-    public void tryPadToFour1(){
+    public void testPadToMoreThanFour(){
         short s =0;
+        int i = 6;
         ByteHelper byteHelper = new ByteHelper();
         byteHelper.addShort(s);
+        byteHelper.addInt(i);
         byteHelper.pad();
-        assertEquals(byteHelper.size(), 4);
+        assertEquals(byteHelper.size(), 8);
     }
+    @Test
+    public void testForCreateBuilder(){
+        byte b = 3;
+        ByteHelper byteHelper = new ByteHelper(b);
+        byte [] builder = byteHelper.toByteArray();
+        assertEquals(builder[0], 3);
+    }
+
+    @Test
+    public void testPaddedSpaceIsZero(){
+        byte b = 3;
+        ByteHelper byteHelper = new ByteHelper(b);
+        byteHelper.pad();
+        byte [] builder = byteHelper.toByteArray();
+        assertEquals(builder[2],0 );
+    }
+
 }

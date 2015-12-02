@@ -10,14 +10,14 @@ import static org.junit.Assert.*;
 public class ByteHelperTest {
 
     @Test
-    public void tryAddByte(){
+    public void testAddByte(){
         byte b = 0;
         ByteHelper byteHelper = new ByteHelper(b);
         assertEquals(byteHelper.size(), 1);
     }
 
     @Test
-    public void tryAddShort(){
+    public void testAddShort(){
         short s =0;
         ByteHelper byteHelper = new ByteHelper();
         byteHelper.addShort(s);
@@ -51,7 +51,7 @@ public class ByteHelperTest {
         assertEquals(byteHelper.size(), 8);
     }
     @Test
-    public void testForCreateBuilder(){
+    public void tesCreateBuilder(){
         byte b = 3;
         ByteHelper byteHelper = new ByteHelper(b);
         byte [] builder = byteHelper.toByteArray();
@@ -65,6 +65,15 @@ public class ByteHelperTest {
         byteHelper.pad();
         byte [] builder = byteHelper.toByteArray();
         assertEquals(builder[2],0 );
+    }
+
+    @Test
+    public void testForCorrectByteArraySize(){
+        byte b = 3;
+        ByteHelper byteHelper = new ByteHelper(b);
+        byteHelper.pad();
+        byte [] builder = byteHelper.toByteArray();
+        assertEquals(builder.length,4);
     }
 
 }

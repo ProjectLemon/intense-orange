@@ -3,7 +3,6 @@ package org.projectlemon.intenseorange.model.network;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.widget.Toast;
@@ -28,6 +27,7 @@ public class WifiDirectReciever extends BroadcastReceiver {
 
     public WifiDirectReciever(WifiP2pManager m, WifiP2pManager.Channel c, Context ctx,
                               WifiP2pManager.PeerListListener listener, NetworkController ctrl) {
+        super();
         this.mManager = m;
         this.mChannel = c;
         this.context = ctx;

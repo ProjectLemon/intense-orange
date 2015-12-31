@@ -89,7 +89,6 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void start() {
-        onResume();
         mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -137,7 +136,7 @@ public class NetworkController implements NerworkControllerInterface {
      * @param data the data to receive
      */
     @Override
-    public void receiveData(byte[] data) {
+    public void receiveData(byte[] data) throws NullPointerException {
         callbackFunction.handleData(data);
     }
 
@@ -176,7 +175,7 @@ public class NetworkController implements NerworkControllerInterface {
                 if(role == Role.CLIENT)
                     connectToGroupOwner();
                 else if(role == Role.SERVER) {
-                    Toast.makeText(context, "Trying to create group", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(context, "Trying to create group", Toast.LENGTH_SHORT).show();
                     mManager.createGroup(mChannel, null);
                 }
 

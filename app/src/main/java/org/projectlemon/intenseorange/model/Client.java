@@ -17,4 +17,8 @@ public class Client implements Runnable{
     public void run() {
 
     }
+
+    public void sendMessage(byte[] msg) {
+
+    }
 }

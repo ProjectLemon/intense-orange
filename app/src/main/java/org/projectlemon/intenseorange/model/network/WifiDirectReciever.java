@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import org.projectlemon.intenseorange.controller.implementations.NetworkController;
 import org.projectlemon.intenseorange.model.Client;
-import org.projectlemon.intenseorange.model.Server;
+import org.projectlemon.intenseorange.model.server.Server;
 
 import java.lang.reflect.Method;
 import java.nio.channels.Channel;

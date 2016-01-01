@@ -9,21 +9,16 @@ import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.controller.interfaces.NerworkControllerInterface;
 import org.projectlemon.intenseorange.model.Client;
-import org.projectlemon.intenseorange.model.Server;
+import org.projectlemon.intenseorange.model.server.Server;
 import org.projectlemon.intenseorange.model.network.WifiDirectReciever;
 import org.projectlemon.intenseorange.model.utilities.Role;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -117,8 +112,17 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void close() {
-        //TODO: Implement
-        throw new UnsupportedOperationException("Not yet implemented");
+        mManager.cancelConnect(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(context, "Connection closed", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onFailure(int reason) {
+
+            }
+        });
     }
 
     /**
@@ -128,7 +132,7 @@ public class NetworkController implements NerworkControllerInterface {
     @Override
     public void sendData(byte[] data) {
         //TODO: Implement
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**

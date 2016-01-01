@@ -1,6 +1,9 @@
 package org.projectlemon.intenseorange.model.server;
 
 import org.projectlemon.intenseorange.model.Client;
+import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
+import org.projectlemon.intenseorange.model.utilities.Role;
+import org.projectlemon.intenseorange.model.utilities.helpers.MessageHelper;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,8 +21,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Server implements Runnable {
     private ServerSocket serverSocket;
+    private MessageHelper msgHelper = new MessageHelper(Role.SERVER, this, null);
     private List<Client> connectedClients = new ArrayList<>();
-    private LinkedBlockingQueue<>
+    private LinkedBlockingQueue<PDU> messageQueue = new LinkedBlockingQueue<>();
 
     public Server() {
         try {
@@ -33,9 +37,20 @@ public class Server implements Runnable {
     }
 
     public void connectClient(Client c) {
+        msgHelper.newClient(c);
         connectedClients.add(c);
+    }
+    public void disconnectClient(Client c) {
+        msgHelper.removeClient(c);
+        connectedClients.remove(c);
     }
     public List<Client> getConnectedClients() {
         return this.connectedClients;
+    }
+    public LinkedBlockingQueue<PDU> getMessageQueue() {
+        return messageQueue;
+    }
+    public ServerSocket getServerSocket() {
+        return this.serverSocket;
     }
 }

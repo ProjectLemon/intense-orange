@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Class: Server
@@ -18,6 +19,7 @@ import java.util.List;
 public class Server implements Runnable {
     private ServerSocket serverSocket;
     private List<Client> connectedClients = new ArrayList<>();
+    private LinkedBlockingQueue<>
 
     public Server() {
         try {

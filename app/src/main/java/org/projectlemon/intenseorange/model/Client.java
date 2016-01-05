@@ -4,10 +4,12 @@ package org.projectlemon.intenseorange.model;
  * Created by Jenny on 2015-11-11.
  */
 public class Client implements Runnable{
-    private int id =0;
+    private int id = 0;
 
-    public Client(){
 
+
+    public Client(int id){
+        this.id = id;
     }
     public int getKey(){
         return id;
@@ -20,5 +22,14 @@ public class Client implements Runnable{
 
     public void sendMessage(byte[] msg) {
 
+    }
+    @Override
+     public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

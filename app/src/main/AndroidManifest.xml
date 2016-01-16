@@ -35,6 +35,11 @@
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation" >
         </activity>
+        <activity
+            android:name=".ui.screen.client.TeamSetup"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation" >
+        </activity>
     </application>
 
 </manifest>

@@ -32,7 +32,8 @@
         android:text="@string/nearby_games_title"
         android:layout_alignTop="@+id/start_screen_logo"
         android:layout_alignLeft="@+id/nearby_games_list"
-        android:layout_alignStart="@+id/nearby_games_list" />
+        android:layout_alignStart="@+id/nearby_games_list"
+        android:layout_margin="8dp" />
 
     <ListView android:id="@+id/nearby_games_list"
         android:layout_width="260dp"
@@ -40,7 +41,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="@color/colorBlack"
-        android:layout_below="@+id/nearby_games_title" />
+        android:layout_below="@id/nearby_games_title" />
 
 
 </RelativeLayout>

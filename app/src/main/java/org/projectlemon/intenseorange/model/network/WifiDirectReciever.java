@@ -62,7 +62,8 @@ public class WifiDirectReciever extends BroadcastReceiver {
                     t.start();
                     controller.server = s;
                 } else if(info.groupFormed) {
-                    Client c = new Client();
+                    int id = 4312; // TODO temp fix be able to build
+                    Client c = new Client(id);
                     Thread t = new Thread(c);
                     t.start();
                     controller.client = c;

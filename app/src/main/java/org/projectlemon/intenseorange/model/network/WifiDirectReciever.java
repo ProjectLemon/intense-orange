@@ -28,6 +28,7 @@ public class WifiDirectReciever extends BroadcastReceiver {
 
     public WifiDirectReciever(WifiP2pManager m, WifiP2pManager.Channel c, Context ctx,
                               WifiP2pManager.PeerListListener listener, NetworkController ctrl) {
+        super();
         this.mManager = m;
         this.mChannel = c;
         this.context = ctx;

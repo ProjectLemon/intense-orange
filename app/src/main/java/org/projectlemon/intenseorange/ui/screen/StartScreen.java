@@ -20,7 +20,7 @@ public class StartScreen extends Screen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
-        networkController = new NetworkController(this, Role.CLIENT, null);
+        networkController = new NetworkController(this, Role.SERVER, null);
         networkController.start();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.view_list_item);

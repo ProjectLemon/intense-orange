@@ -5,4 +5,5 @@ package org.projectlemon.intenseorange.model.network;
  * This is a the superclass for all packages to be send in the program.
  */
 public abstract class WifiPackage {
+
 }

@@ -3,14 +3,13 @@ package org.projectlemon.intenseorange.model.network;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.widget.Toast;
 
 import org.projectlemon.intenseorange.controller.implementations.NetworkController;
 import org.projectlemon.intenseorange.model.Client;
-import org.projectlemon.intenseorange.model.Server;
+import org.projectlemon.intenseorange.model.server.Server;
 
 import java.lang.reflect.Method;
 import java.nio.channels.Channel;

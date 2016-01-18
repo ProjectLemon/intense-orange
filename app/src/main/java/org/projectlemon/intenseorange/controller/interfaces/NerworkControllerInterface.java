@@ -1,5 +1,7 @@
 package org.projectlemon.intenseorange.controller.interfaces;
 
+import org.projectlemon.intenseorange.model.utilities.exceptions.UnableToConnectException;
+
 /**
  * Class: NetworkControllerInterface
  * Purpose: Public interface for the network controller
@@ -24,7 +26,7 @@ public interface NerworkControllerInterface {
      * devices that is part of the game. Depending on it's role, the device will act as a server
      * or as a client that connects to a group.
      */
-    void start();
+    void start() throws UnableToConnectException;
 
 
     void pause();

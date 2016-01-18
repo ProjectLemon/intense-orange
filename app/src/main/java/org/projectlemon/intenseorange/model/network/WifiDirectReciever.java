@@ -10,7 +10,9 @@ import android.widget.Toast;
 import org.projectlemon.intenseorange.controller.implementations.NetworkController;
 import org.projectlemon.intenseorange.model.Client;
 import org.projectlemon.intenseorange.model.server.Server;
+import org.projectlemon.intenseorange.model.utilities.NetworkVariables;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.channels.Channel;
 
@@ -62,12 +64,16 @@ public class WifiDirectReciever extends BroadcastReceiver {
                     t.start();
                     controller.server = s;
                 } else if(info.groupFormed) {
-                    int id = 4312; // TODO temp fix be able to build
-                    Client c = new Client(id);
+                    int id = NetworkVariables.getID();
+                    Client c = null;
+                    try {
+                        c = new Client(id, info.groupOwnerAddress);
+                    } catch (IOException e) {
+                        Toast.makeText(context, "Unable to connect", Toast.LENGTH_SHORT).show();
+                    }
                     Thread t = new Thread(c);
                     t.start();
                     controller.client = c;
-                    controller.server.connectClient(c);
                 }
             }
         };

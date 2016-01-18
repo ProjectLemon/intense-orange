@@ -100,10 +100,10 @@ public class NetworkController implements NerworkControllerInterface {
 
                 @Override
                 public void onFailure(int reason) {
-                    throw new UnableToConnectException("Unable to contact network utilities");
+                    throw new RuntimeException();
                 }
             });
-        } catch(UnableToConnectException e) {
+        } catch(RuntimeException e) {
             throw new UnableToConnectException(e.getMessage());
         }
     }

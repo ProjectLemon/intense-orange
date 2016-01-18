@@ -9,6 +9,7 @@ import android.widget.ListView;
 import org.projectlemon.intenseorange.R;
 import org.projectlemon.intenseorange.controller.implementations.NetworkController;
 import org.projectlemon.intenseorange.model.utilities.Role;
+import org.projectlemon.intenseorange.model.utilities.exceptions.UnableToConnectException;
 import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
@@ -30,7 +31,11 @@ public class StartScreen extends Screen {
         setContentView(R.layout.activity_start_screen);
 
         networkController = new NetworkController(this, Role.SERVER, null);
-        networkController.start();
+        try {
+            networkController.start();
+        } catch (UnableToConnectException e) {
+            // TODO catch
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.view_list_item);
         ((ListView) findViewById(R.id.nearby_games_list)).setAdapter(adapter);

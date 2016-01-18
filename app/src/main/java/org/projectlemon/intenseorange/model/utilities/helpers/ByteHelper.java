@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Class: ByteHelper
  * Purpose: Class to build byte sequences for information to be send between units in the peer
- * network.
+ *          network.
  * Created by linuslagerhjelm on 15-11-25.
  */
 public class ByteHelper {
@@ -19,8 +19,8 @@ public class ByteHelper {
 
     /**
      * Take bytes as an input parameter and stores it in the arrayList arrayOfBytes.
-     * @param arrayOfBytes
-     * @return
+     * @param arrayOfBytes the bytes to add to the sequence
+     * @return The new byte sequence
      */
 
     public byte[] addByte(byte... arrayOfBytes){
@@ -32,8 +32,8 @@ public class ByteHelper {
 
     /**
      * Take a short as input and modifies it to bytes.
-     * @param s
-     * @return
+     * @param s the short type value to add to the sequence
+     * @return The new byte sequence
      */
     public ArrayList<Byte> addShort(Short s){
         this.arrayOfBytes.add((byte) ((s >> 8) & 0xff));
@@ -43,8 +43,9 @@ public class ByteHelper {
 
     /**
      * Take an int as input and modifies it to bytes.
-     * @param i
-     * @return
+
+     * @param i the int type value to add to the sequence
+     * @return The new byte sequence
      */
     public ArrayList<Byte> addInt(int i){
         this.arrayOfBytes.add((byte) ((i >> 24) & 0xff));
@@ -56,7 +57,7 @@ public class ByteHelper {
 
     /**
      * This is a builder. It builds a byte array by the pieces in the arraylist.
-     * @return result;
+     * @return the byte sequence as a byte array;
      */
     public byte[] toByteArray() {
         byte[] result = new byte[arrayOfBytes.size()];
@@ -68,7 +69,7 @@ public class ByteHelper {
 
     /**
      * Pad the sequence with byte zeros so it's always divisible by four.
-     * @return
+     * @return the new byte sequence
      */
     public ArrayList<Byte> pad(){
 
@@ -86,8 +87,8 @@ public class ByteHelper {
     }
 
     /**
-     * Returns the size of the array.
-     * @return
+     * Get the size of the byte sequence
+     * @return The length of the byte sequence
      */
     public int size() {
         return arrayOfBytes.size();

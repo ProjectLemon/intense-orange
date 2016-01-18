@@ -3,14 +3,13 @@ package org.projectlemon.intenseorange.model.network;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.widget.Toast;
 
 import org.projectlemon.intenseorange.controller.implementations.NetworkController;
 import org.projectlemon.intenseorange.model.Client;
-import org.projectlemon.intenseorange.model.Server;
+import org.projectlemon.intenseorange.model.server.Server;
 
 import java.lang.reflect.Method;
 import java.nio.channels.Channel;
@@ -28,6 +27,7 @@ public class WifiDirectReciever extends BroadcastReceiver {
 
     public WifiDirectReciever(WifiP2pManager m, WifiP2pManager.Channel c, Context ctx,
                               WifiP2pManager.PeerListListener listener, NetworkController ctrl) {
+        super();
         this.mManager = m;
         this.mChannel = c;
         this.context = ctx;
@@ -62,7 +62,8 @@ public class WifiDirectReciever extends BroadcastReceiver {
                     t.start();
                     controller.server = s;
                 } else if(info.groupFormed) {
-                    Client c = new Client();
+                    int id = 4312; // TODO temp fix be able to build
+                    Client c = new Client(id);
                     Thread t = new Thread(c);
                     t.start();
                     controller.client = c;

@@ -3,6 +3,7 @@ package org.projectlemon.intenseorange.controller.implementations;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -22,6 +23,7 @@ import org.projectlemon.intenseorange.model.utilities.exceptions.UnableToConnect
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: Handle device no wifi
 
 /**
  * Class: NetworkController
@@ -85,6 +87,10 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void start() throws UnableToConnectException {
+        WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        if (!wifi.isWifiEnabled()){
+            throw new UnableToConnectException("Wifi is disabled");
+        }
         try{
             mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
                 @Override
@@ -94,10 +100,10 @@ public class NetworkController implements NerworkControllerInterface {
 
                 @Override
                 public void onFailure(int reason) {
-                    throw new UnableToConnectException("Unable to contact network utilities");
+                    throw new RuntimeException();
                 }
             });
-        } catch(UnableToConnectException e) {
+        } catch(RuntimeException e) {
             throw new UnableToConnectException(e.getMessage());
         }
     }

@@ -1,6 +1,7 @@
 package org.projectlemon.intenseorange.model.utilities.helpers;
 
 import org.projectlemon.intenseorange.model.Client;
+import org.projectlemon.intenseorange.model.server.ClientThread;
 import org.projectlemon.intenseorange.model.server.Server;
 import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
 import org.projectlemon.intenseorange.model.utilities.Role;
@@ -17,7 +18,7 @@ public class MessageHelper implements Runnable{
     Role role;
     Server server;
     Client client;
-    List<Client> connectedClients;
+    List<ClientThread> connectedClients;
 
     public MessageHelper(Role r, Server s, Client c) {
         this.role = r;
@@ -40,8 +41,8 @@ public class MessageHelper implements Runnable{
             while(true) {
                 if(server.getMessageQueue().size() > 0) {
                     for(PDU msg:server.getMessageQueue()) {
-                        for(Client c:connectedClients) {
-                            c.sendMessage(msg.toByteArray());
+                        for(ClientThread c:connectedClients) {
+                            c.sendMessage(msg);
                         }
                     }
                 }
@@ -51,10 +52,10 @@ public class MessageHelper implements Runnable{
         }
     }
 
-    public void newClient(Client c) {
+    public void newClient(ClientThread c) {
         connectedClients.add(c);
     }
-    public void removeClient(Client c) {
+    public void removeClient(ClientThread c) {
         connectedClients.remove(c);
     }
 }

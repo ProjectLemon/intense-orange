@@ -43,6 +43,7 @@ public class ByteHelper {
 
     /**
      * Take an int as input and modifies it to bytes.
+
      * @param i the int type value to add to the sequence
      * @return The new byte sequence
      */

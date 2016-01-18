@@ -3,6 +3,9 @@ package org.projectlemon.intenseorange.controller.implementations;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.WpsInfo;
+import android.net.wifi.p2p.WifiP2pConfig;
+import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Looper;
@@ -10,12 +13,14 @@ import android.widget.Toast;
 
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.controller.interfaces.NerworkControllerInterface;
+import org.projectlemon.intenseorange.model.Client;
+import org.projectlemon.intenseorange.model.server.Server;
 import org.projectlemon.intenseorange.model.network.WifiDirectReciever;
 import org.projectlemon.intenseorange.model.utilities.Role;
+import org.projectlemon.intenseorange.model.utilities.exceptions.UnableToConnectException;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -34,10 +39,9 @@ public class NetworkController implements NerworkControllerInterface {
     private Context context;
     private Role role;
     private CallbackObject callbackFunction;
-    private WifiP2pDeviceList peerList;
-    private WifiP2pManager.PeerListListener peerListener;
-    private ServerSocket serverSocket;
-    private Socket socket;
+    private List<WifiP2pDevice> peerList = new ArrayList();
+    public Server server;
+    public Client client;
 
     /**
      * Creates a new NetworkController to be used for network communication between devices
@@ -50,12 +54,11 @@ public class NetworkController implements NerworkControllerInterface {
         this.role = role;
         this.callbackFunction = function;
 
-        peerListener = createPeerListener();
+        WifiP2pManager.PeerListListener peerListener = createPeerListener();
         mManager = (WifiP2pManager)context.getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(context, Looper.getMainLooper(), null);
-        wifiReceiver = new WifiDirectReciever(mManager, mChannel, context, peerListener);
+        wifiReceiver = new WifiDirectReciever(mManager, mChannel, context, peerListener, this);
         setupIntentFilter();
-        setupSockets();
     }
 
 
@@ -81,7 +84,7 @@ public class NetworkController implements NerworkControllerInterface {
      * or as a client that connects to a group.
      */
     @Override
-    public void start() {
+    public void start() throws UnableToConnectException {
         mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -90,10 +93,9 @@ public class NetworkController implements NerworkControllerInterface {
 
             @Override
             public void onFailure(int reason) {
-                Toast.makeText(context, "Discover peers failed", Toast.LENGTH_SHORT).show();
+                throw new UnableToConnectException("Unable to contact network utilities");
             }
         });
-
     }
 
     @Override
@@ -111,8 +113,17 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void close() {
-        //TODO: Implement
-        throw new UnsupportedOperationException("Not yet implemented");
+        mManager.cancelConnect(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(context, "Connection closed", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onFailure(int reason) {
+
+            }
+        });
     }
 
     /**
@@ -122,7 +133,7 @@ public class NetworkController implements NerworkControllerInterface {
     @Override
     public void sendData(byte[] data) {
         //TODO: Implement
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
@@ -130,25 +141,23 @@ public class NetworkController implements NerworkControllerInterface {
      * @param data the data to receive
      */
     @Override
-    public void receiveData(byte[] data) {
+    public void receiveData(byte[] data) throws NullPointerException {
         callbackFunction.handleData(data);
     }
 
     private void connectToGroupOwner() {
-        //TODO: Implement
-    }
-
-    private void setupSockets() {
-        if (role == Role.SERVER) {
-            try {
-                serverSocket = new ServerSocket();
-            } catch (IOException e) {
-                e.printStackTrace();
+        //Collection<WifiP2pDevice> devices = peers.getDeviceList();
+        WifiP2pConfig config = new WifiP2pConfig();
+        Toast.makeText(context, "Trying to connect to group", Toast.LENGTH_SHORT).show();
+        for (WifiP2pDevice device: peerList) {
+            if(device.isGroupOwner()) {
+                config.deviceAddress = device.deviceAddress;
+                config.wps.setup = WpsInfo.PBC;
+                mManager.connect(mChannel, config, null);
             }
-        } else {
-            socket = new Socket();
         }
     }
+
 
     private void setupIntentFilter() {
         intentFilter = new IntentFilter();
@@ -163,8 +172,18 @@ public class NetworkController implements NerworkControllerInterface {
         return new WifiP2pManager.PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
-                peerList = peers;
-                connectToGroupOwner();
+                peerList.clear();
+                peerList.addAll(peers.getDeviceList());
+                if(peerList.size() == 0){
+                    Toast.makeText(context, "No devices found", Toast.LENGTH_SHORT).show();
+                }
+                if(role == Role.CLIENT)
+                    connectToGroupOwner();
+                else if(role == Role.SERVER) {
+                     Toast.makeText(context, "Trying to create group", Toast.LENGTH_SHORT).show();
+                    mManager.createGroup(mChannel, null);
+                }
+
             }
         };
     }

@@ -17,6 +17,7 @@ import org.projectlemon.intenseorange.model.Client;
 import org.projectlemon.intenseorange.model.server.Server;
 import org.projectlemon.intenseorange.model.network.WifiDirectReciever;
 import org.projectlemon.intenseorange.model.utilities.Role;
+import org.projectlemon.intenseorange.model.utilities.exceptions.UnableToConnectException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class NetworkController implements NerworkControllerInterface {
      * or as a client that connects to a group.
      */
     @Override
-    public void start() {
+    public void start() throws UnableToConnectException {
         mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -92,7 +93,7 @@ public class NetworkController implements NerworkControllerInterface {
 
             @Override
             public void onFailure(int reason) {
-                Toast.makeText(context, "Unable to search for peers", Toast.LENGTH_SHORT).show();
+                throw new UnableToConnectException("Unable to contact network utilities");
             }
         });
     }

@@ -33,6 +33,8 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
+        Thread t1 = new Thread(msgHelper);
+        t1.start();
 
     }
 

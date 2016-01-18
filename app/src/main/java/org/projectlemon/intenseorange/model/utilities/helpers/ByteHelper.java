@@ -41,6 +41,11 @@ public class ByteHelper {
         return arrayOfBytes;
     }
 
+    /**
+     * Take an int as input and modifies it to bytes.
+     * @param i
+     * @return
+     */
     public ArrayList<Byte> addInt(int i){
         this.arrayOfBytes.add((byte) ((i >> 24) & 0xff));
         this.arrayOfBytes.add((byte) ((i >> 16) & 0xff));

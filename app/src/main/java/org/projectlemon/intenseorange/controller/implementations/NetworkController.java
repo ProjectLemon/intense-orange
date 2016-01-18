@@ -85,17 +85,21 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void start() throws UnableToConnectException {
-        mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
-            @Override
-            public void onSuccess() {
-                Toast.makeText(context, "Searching... ", Toast.LENGTH_SHORT).show();
-            }
+        try{
+            mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(context, "Searching... ", Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onFailure(int reason) {
-                throw new UnableToConnectException("Unable to contact network utilities");
-            }
-        });
+                @Override
+                public void onFailure(int reason) {
+                    throw new UnableToConnectException("Unable to contact network utilities");
+                }
+            });
+        } catch(UnableToConnectException e) {
+            throw new UnableToConnectException(e.getMessage());
+        }
     }
 
     @Override

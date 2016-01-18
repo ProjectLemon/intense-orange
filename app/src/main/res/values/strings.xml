@@ -1,4 +1,7 @@
 <resources>
+    <string name="enter_game_name">Enter Game Name</string>
     <string name="app_name">Intense Orange</string>
     <string name="action_settings">Settings</string>
+    <string name="create_game_instructions">Eos id eirmod placerat, denique philosophia ei duo. Vix munere melius bonorum no, vis ex graeco inimicus suavitate. Ei quo melius menandri, qui et utroque epicuri. Id eum decore delectus, appareat facilisis vis in. Eum feugait repudiare in. Ea oratio recusabo sit, in quo fierent detraxit mediocrem, clita omittam quo ei.</string>
+
 </resources>

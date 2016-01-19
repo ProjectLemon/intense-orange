@@ -100,7 +100,7 @@ public class NetworkController implements NerworkControllerInterface {
 
                 @Override
                 public void onFailure(int reason) {
-                    throw new RuntimeException();
+                    throw new RuntimeException("Discover peers on failure reason: "+reason);
                 }
             });
         } catch(RuntimeException e) {

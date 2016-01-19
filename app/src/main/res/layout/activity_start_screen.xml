@@ -15,11 +15,15 @@
         android:text="@string/start_game"
         android:onClick="startGame"
         android:clickable="true"
+
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/nearby_games_list"
-        android:layout_toStartOf="@+id/nearby_games_list"
-        android:layout_marginRight="151dp"
-        android:layout_marginEnd="151dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="300dp" /> <!-- android:layout_marginEnd="151dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+-->
 
     <TextView android:id="@+id/nearby_games_title"
         android:layout_width="wrap_content"
@@ -31,12 +35,12 @@
         android:layout_margin="8dp" />
 
     <ListView android:id="@+id/nearby_games_list"
-        android:layout_width="260dp"
+        android:layout_width="@dimen/nearby_games_list_width"
         android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:background="@color/colorBlack"
-        android:layout_below="@id/nearby_games_title" />
+        android:layout_below="@+id/nearby_games_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

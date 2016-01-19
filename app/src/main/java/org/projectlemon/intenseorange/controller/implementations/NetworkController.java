@@ -89,8 +89,9 @@ public class NetworkController implements NerworkControllerInterface {
     public void start() throws UnableToConnectException {
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         if (!wifi.isWifiEnabled()){
-            throw new UnableToConnectException("Wifi is disabled");
+            wifi.setWifiEnabled(true);
         }
+
         try{
             mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
                 @Override
@@ -100,7 +101,7 @@ public class NetworkController implements NerworkControllerInterface {
 
                 @Override
                 public void onFailure(int reason) {
-                    throw new RuntimeException("Discover peers on failure reason: "+reason);
+                    throw new RuntimeException("wifi direct not supported. Code: "+reason);
                 }
             });
         } catch(RuntimeException e) {

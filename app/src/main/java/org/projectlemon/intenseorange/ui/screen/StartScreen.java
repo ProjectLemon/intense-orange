@@ -34,7 +34,7 @@ public class StartScreen extends Screen {
         try {
             networkController.start();
         } catch (UnableToConnectException e) {
-            // TODO catch
+            System.out.println("####### "+e.getMessage());
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.view_list_item);

@@ -8,4 +8,23 @@
     <color name="colorBlack">#242528</color>
 
     <color name="colorWhite">#FFFFFF</color>
+
+
+    <!-- Color picker colors -->
+    <color name="colorPicker1">#C61923</color>
+    <color name="colorPicker2">#E42466</color>
+    <color name="colorPicker3">#8800A0</color>
+    <color name="colorPicker4">#4953B2</color>
+    <color name="colorPicker5">#1187DE</color>
+    <color name="colorPicker6">#0F7767</color>
+    <color name="colorPicker7">#7ABA39</color>
+    <color name="colorPicker8">#FEE92E</color>
+    <color name="colorPicker9">#E85506</color>
+    <color name="colorPicker10">#D8D8D8</color>
+    <color name="colorPicker11">#657D8A</color>
+    <color name="colorPicker12">#644237</color>
+    <color name="colorPicker13">#1C252A</color>
+    <color name="colorPicker14">#C2FF7D</color>
+    <color name="colorPicker15">#76FFFE</color>
+    <color name="colorPicker16">#A387D2</color>
 </resources>

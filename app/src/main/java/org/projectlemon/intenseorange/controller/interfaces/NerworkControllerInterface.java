@@ -25,8 +25,11 @@ public interface NerworkControllerInterface {
      * Upon calling this method. The device will open a wifi direct connection with surrounding
      * devices that is part of the game. Depending on it's role, the device will act as a server
      * or as a client that connects to a group.
+     *
+     * @exception UnableToConnectException - if the application could not connect to network
+     * @exception IllegalStateException - if device is client and no nickname specified
      */
-    void start() throws UnableToConnectException;
+    void start() throws UnableToConnectException, IllegalStateException;
 
 
     void pause();
@@ -51,4 +54,12 @@ public interface NerworkControllerInterface {
      * @param data the data to receive
      */
     void receiveData(byte[] data);
+
+    /**
+     * Sets a nickname for the client device
+     *
+     * @param nickname the nickname to be set
+     * @throws UnsupportedOperationException - If the device is a server device
+     */
+    void setNickname(String nickname) throws UnsupportedOperationException,IllegalArgumentException;
 }

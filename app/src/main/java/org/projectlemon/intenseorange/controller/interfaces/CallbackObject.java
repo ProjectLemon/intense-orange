@@ -15,4 +15,11 @@ public interface CallbackObject extends Runnable{
      * @param data the PDU as inputstream
      */
     void handleData(InputStream data);
+
+    /**
+     * This method is used for reporting async errors to the GUI
+     *
+     * @param reason Reason code
+     */
+    void onError(int reason);
 }

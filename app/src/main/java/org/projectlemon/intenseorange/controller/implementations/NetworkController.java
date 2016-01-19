@@ -89,7 +89,8 @@ public class NetworkController implements NerworkControllerInterface {
      * devices that is part of the game. Depending on it's role, the device will act as a server
      * or as a client that connects to a group.
      *
-     * @exception UnableToConnectException - if the application could not connect to network
+     * Uppon network error, this function will call the onError()-method from CallbackObject
+     *
      * @exception IllegalStateException - if device is client and no nickname specified
      */
     @Override
@@ -103,21 +104,17 @@ public class NetworkController implements NerworkControllerInterface {
             throw new IllegalStateException("No nickname specified");
         }
 
-        try{
-            mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
-                @Override
-                public void onSuccess() {
-                    Toast.makeText(context, "Searching... ", Toast.LENGTH_SHORT).show();
-                }
+        mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(context, "Searching... ", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onFailure(int reason) {
-                    throw new RuntimeException("wifi direct not supported. Code: "+reason);
-                }
-            });
-        } catch(RuntimeException e) {
-            throw new UnableToConnectException(e.getMessage());
-        }
+            @Override
+            public void onFailure(int reason) {
+                callbackFunction.onError(reason);
+            }
+        });
     }
 
     @Override

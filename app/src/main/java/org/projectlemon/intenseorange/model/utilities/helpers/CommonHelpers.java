@@ -15,6 +15,6 @@ public class CommonHelpers {
      * @return true if string was null or empty
      */
     public static boolean isNullOrEmpty(String str) {
-        return str != null && !str.isEmpty();
+        return str == null || str.isEmpty();
     }
 }

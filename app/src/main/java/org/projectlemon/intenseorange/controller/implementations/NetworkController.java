@@ -183,6 +183,8 @@ public class NetworkController implements NerworkControllerInterface {
         if(CommonHelpers.isNullOrEmpty(nickname)) {
             throw new IllegalArgumentException("No nickname specified");
         }
+
+        this.nickname = nickname;
     }
 
     private void connectToGroupOwner() {

@@ -1,6 +1,9 @@
 package org.projectlemon.intenseorange.model.utilities.helpers;
 
+import org.projectlemon.intenseorange.model.utilities.NetworkVariables;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class: ByteHelper
@@ -92,6 +95,17 @@ public class ByteHelper {
      */
     public int size() {
         return arrayOfBytes.size();
+    }
+
+    /**
+     * Removes the network header of a specified PDU and returns a byte array containing only the
+     * message itself. Intended to abstract away parts of the necessary communication form the user
+     * of the API.
+     * @param msg the byte array to strip away network header from
+     * @return byte array with the network header removed
+     */
+    public static byte[] stripNetworkHeader(byte [] msg) {
+        return Arrays.copyOfRange(msg, NetworkVariables.HEADER_SIZE, msg.length);
     }
 
 }

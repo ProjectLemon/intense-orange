@@ -89,18 +89,16 @@ public class NetworkController implements NerworkControllerInterface {
      * devices that is part of the game. Depending on it's role, the device will act as a server
      * or as a client that connects to a group.
      *
-     * Uppon network error, this function will call the onError()-method from CallbackObject
+     * Upon network error, this function will call the onError()-method from CallbackObject
      *
      * @exception IllegalStateException - if device is client and no nickname specified
      */
     @Override
-    public void start() throws UnableToConnectException, IllegalStateException {
+    public void start() throws IllegalStateException {
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-        if (!wifi.isWifiEnabled()){
-            wifi.setWifiEnabled(true);
-        }
+        wifi.setWifiEnabled(true);
 
-        if ( role == Role.CLIENT && nickname.length() == 0 ) {
+        if (role == Role.CLIENT && nickname.length() == 0) {
             throw new IllegalStateException("No nickname specified");
         }
 

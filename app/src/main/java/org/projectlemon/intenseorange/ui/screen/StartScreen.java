@@ -33,8 +33,8 @@ public class StartScreen extends Screen {
         networkController = new NetworkController(this, Role.SERVER, null);
         try {
             networkController.start();
-        } catch (UnableToConnectException e) {
-            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            System.out.println("####### "+e.getMessage());
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.view_list_item);

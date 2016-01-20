@@ -17,7 +17,6 @@
         android:text="@string/create_game_instructions"
 
         android:textColor="@color/text_color"
-        android:autoText="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="29dp" />

@@ -2,7 +2,11 @@ package app.src.test.java.org.projectlemon.intenseorange;
 
 
 import org.junit.Test;
+import org.projectlemon.intenseorange.model.utilities.NetworkVariables;
 import org.projectlemon.intenseorange.model.utilities.helpers.ByteHelper;
+
+import java.io.ByteArrayOutputStream;
+
 import static org.junit.Assert.*;
 /**
  * Created by Jenny on 2015-12-01.
@@ -74,6 +78,26 @@ public class ByteHelperTest {
         byteHelper.pad();
         byte [] builder = byteHelper.toByteArray();
         assertEquals(builder.length,4);
+    }
+
+    @Test
+    public void stripNetworkHeaderCorrectLength() {
+        byte[] b = new byte[NetworkVariables.HEADER_SIZE+1];
+        b = ByteHelper.stripNetworkHeader(b);
+        assertEquals(b.length, 1);
+    }
+
+    @Test
+    public void stripNetworkHeaderCorrectContent() throws Exception{
+        byte[] a = new byte[NetworkVariables.HEADER_SIZE];
+        byte[] b = new byte[] {1};
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        outputStream.write(a);
+        outputStream.write(b);
+
+        byte[] c = ByteHelper.stripNetworkHeader(outputStream.toByteArray());
+        assertEquals(c[0], 1);
     }
 
 }

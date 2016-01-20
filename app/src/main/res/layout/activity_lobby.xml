@@ -12,4 +12,10 @@
     tools:context="org.projectlemon.intenseorange.ui.screen.server.Lobby"
     tools:showIn="@layout/activity_lobby">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView" />
 </RelativeLayout>

@@ -1,5 +1,10 @@
 package org.projectlemon.intenseorange.model.client;
 
+import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -14,6 +19,19 @@ public class MessageThread implements Runnable {
 
     @Override
     public void run() {
+        try {
+            while(true) {
+                PDU pdu = PDU.fromInputStream(server.getInputStream());
+                //TODO: Handle receive pdu type
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendData(byte[] msg) throws IOException{
+        OutputStream out = server.getOutputStream();
+        out.write(msg);
     }
 }

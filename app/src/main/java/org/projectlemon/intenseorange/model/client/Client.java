@@ -3,6 +3,7 @@ package org.projectlemon.intenseorange.model.client;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
 
@@ -25,26 +26,24 @@ public class Client extends NetworkDevice implements Runnable {
     private InetAddress serverAddress;
     private Socket server;
     private Map<String, WifiP2pDevice> availableServers = new HashMap<>();
+    private MessageThread messageThread = new MessageThread(server);
+    public WifiBroadcastReceiver receiver;
 
 
     public Client(Context context, CallbackObject callable) throws IOException {
         super(context, callable);
-        server = new Socket(serverAddress.getHostName(), NetworkVariables.PORT);
-        WifiBroadcastReceiver receiver = new WifiBroadcastReceiver(mManager, mChannel);
+        receiver = new WifiBroadcastReceiver(mManager, mChannel);
     }
 
     @Override
     public void run() {
-
-    }
-
-    public void sendMessage(byte[] msg) {
-
+        Thread t1 = new Thread(messageThread);
+        t1.start();
     }
 
     @Override
-    public void sendData(byte[] data) {
-
+    public void sendData(byte[] data) throws IOException {
+        messageThread.sendData(data);
     }
 
     @Override
@@ -52,6 +51,16 @@ public class Client extends NetworkDevice implements Runnable {
 
     }
 
+    /**
+     * This method will try to connect the client to the specified server
+     *
+     * @param nickname The name of the server to connect to
+     * @throws IllegalArgumentException If no valid string was provided
+     * @throws IllegalStateException If requested server could not be verified
+     *
+     * Note: onError()      is called if wifip2p failed to connect
+     * Note: onException()  is called if the socket connection failed
+     */
     public void connectToDevice(String nickname) throws IllegalArgumentException,
                                                         IllegalStateException {
         if(CommonHelpers.isNullOrEmpty(nickname)) {
@@ -60,6 +69,25 @@ public class Client extends NetworkDevice implements Runnable {
         if(!availableServers.containsKey(nickname)) {
             throw new IllegalArgumentException("Server not available");
         }
+
+        WifiP2pDevice serverUnit = availableServers.get(nickname);
+        WifiP2pConfig config = new WifiP2pConfig();
+        config.deviceAddress = serverUnit.deviceAddress;
+        mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                try{
+                    server = new Socket(serverAddress.getHostName(), NetworkVariables.PORT);
+                } catch (IOException e) {
+                    callback.onException(e);
+                }
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                callback.onError(reason);
+            }
+        });
 
     }
 

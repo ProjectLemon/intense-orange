@@ -25,7 +25,7 @@ public class MessageThread implements Runnable {
                 //TODO: Handle receive pdu type
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

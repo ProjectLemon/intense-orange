@@ -7,6 +7,7 @@ import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
 import org.projectlemon.intenseorange.model.utilities.Role;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class: Message helper
@@ -18,7 +19,7 @@ public class MessageHelper implements Runnable{
     Role role;
     Server server;
     Client client;
-    List<ClientThread> connectedClients;
+    Map<String, ClientThread> connectedClients;
 
     public MessageHelper(Role r, Server s, Client c) {
         this.role = r;
@@ -41,8 +42,8 @@ public class MessageHelper implements Runnable{
             while(true) {
                 if(server.getMessageQueue().size() > 0) {
                     for(PDU msg:server.getMessageQueue()) {
-                        for(ClientThread c:connectedClients) {
-                            c.sendMessage(msg);
+                        for(Map.Entry<String, ClientThread> c : connectedClients.entrySet()) {
+                            c.getValue().sendMessage(msg);
                         }
                     }
                 }
@@ -53,7 +54,7 @@ public class MessageHelper implements Runnable{
     }
 
     public void newClient(ClientThread c) {
-        connectedClients.add(c);
+        connectedClients.put(c.getNickname(), c);
     }
     public void removeClient(ClientThread c) {
         connectedClients.remove(c);

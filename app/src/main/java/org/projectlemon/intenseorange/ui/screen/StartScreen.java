@@ -7,9 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.projectlemon.intenseorange.R;
-import org.projectlemon.intenseorange.controller.implementations.NetworkController;
 import org.projectlemon.intenseorange.model.utilities.Role;
-import org.projectlemon.intenseorange.model.utilities.exceptions.UnableToConnectException;
 import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
@@ -66,12 +64,12 @@ public class StartScreen extends Screen {
     @Override
     protected void onResume() {
         super.onResume();
-        networkController.onResume();
+        //networkController.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        networkController.onPause();
+        //networkController.onPause();
     }
 }

@@ -6,7 +6,6 @@ package org.projectlemon.intenseorange.model.utilities.helpers;
  * Created by linuslagerhjelm on 16-01-19.
  */
 
-//TODO: Might need to refactor the name to something better
 public class CommonHelpers {
 
     /**

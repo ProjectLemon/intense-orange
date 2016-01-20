@@ -18,7 +18,7 @@ public class StartScreen extends Screen {
 
 
     /**
-     * Setup screen with {@link Client} to look for nearby games and
+     * Setup screen with Client to look for nearby games and
      * display the to the user.
      */
     @Override
@@ -53,13 +53,16 @@ public class StartScreen extends Screen {
         startActivity(intent);
     }
 
+    /* register the broadcast receiver with the intent values to be matched */
     @Override
     protected void onResume() {
         super.onResume();
+        //registerReceiver(mReceiver, (network device in));
     }
-
+    /* unregister the broadcast receiver */
     @Override
     protected void onPause() {
         super.onPause();
+        //unregisterReceiver(mReceiver);
     }
 }

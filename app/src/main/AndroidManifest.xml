@@ -39,9 +39,9 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"></activity>
         <activity
-            android:name=".ui.screen.server.LobbyScreen"
-            android:label="@string/title_activity_lobby_screen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".ui.screen.server.Lobby"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

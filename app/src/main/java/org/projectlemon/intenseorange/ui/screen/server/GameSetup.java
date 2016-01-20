@@ -24,8 +24,7 @@ public class GameSetup extends Screen {
         EditText text = (EditText) findViewById(R.id.enter_game_name_text);
 
 
-
-        Intent intent = new Intent(this, GameSetup.class);
+        Intent intent = new Intent(this, Lobby.class);
         intent.putExtra("serverName", text.getText().toString());
         startActivity(intent);
     }

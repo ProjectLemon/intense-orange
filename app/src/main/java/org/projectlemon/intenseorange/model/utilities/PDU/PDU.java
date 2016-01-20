@@ -9,7 +9,8 @@ import java.io.InputStream;
 public abstract class PDU{
     //TODO: implement this class with methods and other cool stuff
 
-    public static PDU fromInputStream(InputStream inputStream)throws Exception{
+    public static PDU fromInputStream(InputStream inputStream) throws IOException,
+                                                                    UnsupportedOperationException {
         PDU pdu = null;
         int identifyer;
             identifyer = inputStream.read();

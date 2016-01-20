@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 public class StartScreen extends Screen {
 
-
+    private Client client;
     /**
      * Setup screen with Client to look for nearby games and
      * display the to the user.
@@ -35,7 +35,7 @@ public class StartScreen extends Screen {
         ((ListView) findViewById(R.id.nearby_games_list)).setAdapter(adapter);
 
         CallbackObject detecter = new DetectForNearbyGames(adapter);
-        Client client = new Client(this, detecter);
+        client = new Client(this, detecter);
         new Thread(client).start();
     }
 
@@ -63,12 +63,12 @@ public class StartScreen extends Screen {
     @Override
     protected void onResume() {
         super.onResume();
-        //registerReceiver(mReceiver, (network device in));
+        registerReceiver(client.receiver, client.intentFilter);
     }
     /* unregister the broadcast receiver */
     @Override
     protected void onPause() {
         super.onPause();
-        //unregisterReceiver(mReceiver);
+        unregisterReceiver(client.receiver);
     }
 }

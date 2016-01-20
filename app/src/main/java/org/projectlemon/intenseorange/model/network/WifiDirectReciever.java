@@ -84,8 +84,8 @@ public class WifiDirectReciever extends BroadcastReceiver {
         int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
         if ( !(state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) ) {
             try {
-                Method method1 = mManager.getClass().getMethod("enableP2p", Channel.class);
-                method1.invoke(mManager, mChannel);
+//                Method method1 = mManager.getClass().getMethod("enableP2p", Channel.class);
+//                method1.invoke(mManager, mChannel);
             } catch (Exception e) {
                 e.printStackTrace();
             }

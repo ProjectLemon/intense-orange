@@ -11,6 +11,7 @@ import java.net.Socket;
  */
 public class Client implements Runnable{
     private int id = 0;
+    String nickname;
     private InetAddress serverAddress;
     private Socket server;
 
@@ -33,6 +34,7 @@ public class Client implements Runnable{
     public void sendMessage(byte[] msg) {
 
     }
+
     @Override
      public boolean equals(Object o) {
         return super.equals(o);

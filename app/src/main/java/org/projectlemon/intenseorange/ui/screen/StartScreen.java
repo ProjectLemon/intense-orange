@@ -33,7 +33,7 @@ public class StartScreen extends Screen {
         networkController = new NetworkController(this, Role.SERVER, null);
         try {
             networkController.start();
-        } catch (UnableToConnectException e) {
+        } catch (IllegalStateException e) {
             System.out.println("####### "+e.getMessage());
         }
 

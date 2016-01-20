@@ -19,7 +19,10 @@ import org.projectlemon.intenseorange.model.server.Server;
 import org.projectlemon.intenseorange.model.network.WifiDirectReciever;
 import org.projectlemon.intenseorange.model.utilities.Role;
 import org.projectlemon.intenseorange.model.utilities.exceptions.UnableToConnectException;
+import org.projectlemon.intenseorange.model.utilities.helpers.CommonHelpers;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +41,7 @@ public class NetworkController implements NerworkControllerInterface {
     private WifiP2pManager.Channel mChannel;
     private BroadcastReceiver wifiReceiver;
     private IntentFilter intentFilter;
+    private String nickname = "";
     private Context context;
     private Role role;
     private CallbackObject callbackFunction;
@@ -84,29 +88,31 @@ public class NetworkController implements NerworkControllerInterface {
      * Upon calling this method. The device will open a wifi direct connection with surrounding
      * devices that is part of the game. Depending on it's role, the device will act as a server
      * or as a client that connects to a group.
+     *
+     * Upon network error, this function will call the onError()-method from CallbackObject
+     *
+     * @exception IllegalStateException - if device is client and no nickname specified
      */
     @Override
-    public void start() throws UnableToConnectException {
+    public void start() throws IllegalStateException {
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-        if (!wifi.isWifiEnabled()){
-            wifi.setWifiEnabled(true);
+        wifi.setWifiEnabled(true);
+
+        if (role == Role.CLIENT && nickname.length() == 0) {
+            throw new IllegalStateException("No nickname specified");
         }
 
-        try{
-            mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
-                @Override
-                public void onSuccess() {
-                    Toast.makeText(context, "Searching... ", Toast.LENGTH_SHORT).show();
-                }
+        mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(context, "Searching... ", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onFailure(int reason) {
-                    throw new RuntimeException("wifi direct not supported. Code: "+reason);
-                }
-            });
-        } catch(RuntimeException e) {
-            throw new UnableToConnectException(e.getMessage());
-        }
+            @Override
+            public void onFailure(int reason) {
+                callbackFunction.onError(reason);
+            }
+        });
     }
 
     @Override
@@ -144,7 +150,7 @@ public class NetworkController implements NerworkControllerInterface {
     @Override
     public void sendData(byte[] data) {
         //TODO: Implement
-        //throw new UnsupportedOperationException("Not yet implemented");
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
@@ -153,7 +159,27 @@ public class NetworkController implements NerworkControllerInterface {
      */
     @Override
     public void receiveData(byte[] data) throws NullPointerException {
-        callbackFunction.handleData(data);
+        InputStream stream = new ByteArrayInputStream(data);
+        callbackFunction.handleData(stream);
+    }
+
+    /**
+     * Sets a nickname for the client device
+     *
+     * @param nickname the nickname to be set
+     * @throws UnsupportedOperationException - If the device is a server device
+     */
+    @Override
+    public void setNickname(String nickname) throws UnsupportedOperationException,
+                                                    IllegalArgumentException {
+        if( this.role == Role.SERVER ) {
+            throw new UnsupportedOperationException("Current device is server");
+        }
+        if(CommonHelpers.isNullOrEmpty(nickname)) {
+            throw new IllegalArgumentException("No nickname specified");
+        }
+
+        this.nickname = nickname;
     }
 
     private void connectToGroupOwner() {

@@ -7,7 +7,6 @@ import android.widget.EditText;
 
 import org.projectlemon.intenseorange.R;
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
-import org.projectlemon.intenseorange.model.server.Server;
 import org.projectlemon.intenseorange.ui.ServerDataRetriever;
 import org.projectlemon.intenseorange.ui.screen.Screen;
 
@@ -24,11 +23,10 @@ public class GameSetup extends Screen {
     public void setGameName(View view) {
         EditText text = (EditText) findViewById(R.id.enter_game_name_text);
 
-        CallbackObject callback = new ServerDataRetriever();
-        Server server = new Server(this, callback, text.getText().toString());
+
 
         Intent intent = new Intent(this, GameSetup.class);
-
+        intent.putExtra("serverName", text.getText().toString());
         startActivity(intent);
     }
 

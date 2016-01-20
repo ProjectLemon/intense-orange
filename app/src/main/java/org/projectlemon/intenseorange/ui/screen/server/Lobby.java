@@ -13,6 +13,5 @@ public class Lobby extends Screen {
         setContentView(R.layout.activity_lobby);
 
     }
-
 }
 

@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * Created by linuslagerhjelm on 15-11-25.
  */
-public interface CallbackObject extends Runnable{
+public interface CallbackObject {
 
     /**
      * This function is used to PDUs as inputstream from the system

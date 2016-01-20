@@ -13,4 +13,5 @@
         least 5000 years.</string>
 
     <string name="team_name_hint">Team Name</string>
+    <string name="title_activity_lobby_screen">LobbyScreen</string>
 </resources>

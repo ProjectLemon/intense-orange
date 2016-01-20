@@ -35,13 +35,8 @@ public class StartScreen extends Screen {
         ((ListView) findViewById(R.id.nearby_games_list)).setAdapter(adapter);
 
         CallbackObject detecter = new DetectForNearbyGames(adapter);
-        Client client;
-        try {
-            client = new Client(this, detecter);
-            new Thread(client).start();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        Client client = new Client(this, detecter);
+        new Thread(client).start();
     }
 
     /**

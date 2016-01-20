@@ -25,16 +25,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:hint="@string/enter_game_name"
-        android:layout_below="@+id/button2"
+        android:layout_below="@+id/set_game_name_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/set_game_name_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_new_game"
-        android:onClick="startGame"
+        android:onClick="setGameName"
         android:clickable="true"
         android:layout_gravity="bottom"
         android:layout_centerVertical="true"

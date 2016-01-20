@@ -1,12 +1,11 @@
 package org.projectlemon.intenseorange.model.utilities.helpers;
 
-import org.projectlemon.intenseorange.model.Client;
+import org.projectlemon.intenseorange.model.client.Client;
 import org.projectlemon.intenseorange.model.server.ClientThread;
 import org.projectlemon.intenseorange.model.server.Server;
 import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
-import org.projectlemon.intenseorange.model.utilities.Role;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Class: Message helper
@@ -14,14 +13,12 @@ import java.util.List;
  *
  * Created by Linus Lagerhjelm on 15-11-25.
  */
-public class MessageHelper implements Runnable{
-    Role role;
+public class ServerMessageHelper implements Runnable{
     Server server;
     Client client;
-    List<ClientThread> connectedClients;
+    Map<String, ClientThread> connectedClients;
 
-    public MessageHelper(Role r, Server s, Client c) {
-        this.role = r;
+    public ServerMessageHelper(Server s, Client c) {
         this.server = s;
         this.client = c;
     }
@@ -36,24 +33,20 @@ public class MessageHelper implements Runnable{
          *   if there are new messages in the message queue:
          *    send the message to all connected clients
          */
-        if(role == Role.SERVER){
-            connectedClients = server.getConnectedClients();
-            while(true) {
-                if(server.getMessageQueue().size() > 0) {
-                    for(PDU msg:server.getMessageQueue()) {
-                        for(ClientThread c:connectedClients) {
-                            c.sendMessage(msg);
-                        }
+        connectedClients = server.getConnectedClients();
+        while(true) {
+            if(server.getMessageQueue().size() > 0) {
+                for(PDU msg:server.getMessageQueue()) {
+                    for(Map.Entry<String, ClientThread> c : connectedClients.entrySet()) {
+                        c.getValue().sendMessage(msg);
                     }
                 }
             }
-        } else {
-
         }
     }
 
     public void newClient(ClientThread c) {
-        connectedClients.add(c);
+        connectedClients.put(c.getNickname(), c);
     }
     public void removeClient(ClientThread c) {
         connectedClients.remove(c);

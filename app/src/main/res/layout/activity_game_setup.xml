@@ -17,8 +17,6 @@
         android:text="@string/create_game_instructions"
 
         android:textColor="@color/text_color"
-        android:autoText="false"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -26,11 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
         android:hint="@string/enter_game_name"
-        android:textCursorDrawable="@null"
-
-    android:background="@null"
         android:layout_below="@+id/button2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp" />
@@ -45,5 +39,6 @@
         android:layout_gravity="bottom"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

@@ -7,9 +7,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.projectlemon.intenseorange.R;
-import org.projectlemon.intenseorange.controller.implementations.NetworkController;
-import org.projectlemon.intenseorange.model.utilities.Role;
-import org.projectlemon.intenseorange.model.utilities.exceptions.UnableToConnectException;
 import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
@@ -19,10 +16,9 @@ import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
  */
 public class StartScreen extends Screen {
 
-    private NetworkController networkController;
 
     /**
-     * Setup screen with {@link NetworkController} to look for nearby games and
+     * Setup screen with Client to look for nearby games and
      * display the to the user.
      */
     @Override
@@ -30,12 +26,6 @@ public class StartScreen extends Screen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
-        networkController = new NetworkController(this, Role.SERVER, null);
-        try {
-            networkController.start();
-        } catch (UnableToConnectException e) {
-            // TODO catch
-        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.view_list_item);
         ((ListView) findViewById(R.id.nearby_games_list)).setAdapter(adapter);
@@ -63,15 +53,16 @@ public class StartScreen extends Screen {
         startActivity(intent);
     }
 
+    /* register the broadcast receiver with the intent values to be matched */
     @Override
     protected void onResume() {
         super.onResume();
-        networkController.onResume();
+        //registerReceiver(mReceiver, (network device in));
     }
-
+    /* unregister the broadcast receiver */
     @Override
     protected void onPause() {
         super.onPause();
-        networkController.onPause();
+        //unregisterReceiver(mReceiver);
     }
 }

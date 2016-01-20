@@ -13,4 +13,7 @@
         is a domesticated member of the horse family, Equidae. The wild ancestor of the donkey is
         the African wild ass, E. africanus. The donkey has been used as a working animal for at
         least 5000 years.</string>
+
+    <string name="team_name_hint">Team Name</string>
+    <string name="title_activity_lobby_screen">LobbyScreen</string>
 </resources>

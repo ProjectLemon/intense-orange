@@ -6,7 +6,6 @@ import android.test.ApplicationTestCase;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.projectlemon.intenseorange.controller.implementations.NetworkController;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>

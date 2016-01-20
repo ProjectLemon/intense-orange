@@ -7,8 +7,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.projectlemon.intenseorange.R;
+import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
+import org.projectlemon.intenseorange.model.client.Client;
+import org.projectlemon.intenseorange.ui.DetectForNearbyGames;
 import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
+
+import java.io.IOException;
 
 
 /**
@@ -26,11 +31,17 @@ public class StartScreen extends Screen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.view_list_item);
         ((ListView) findViewById(R.id.nearby_games_list)).setAdapter(adapter);
-        adapter.add("Nearby game 1");
-        adapter.add("Nearby game 2");
+
+        CallbackObject detecter = new DetectForNearbyGames(adapter);
+        Client client;
+        try {
+            client = new Client(this, detecter);
+            new Thread(client).start();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

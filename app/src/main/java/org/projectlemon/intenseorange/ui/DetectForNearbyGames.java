@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class DetectForNearbyGames implements CallbackObject {
 
-    private ArrayAdapter adapter;
+    private ArrayAdapter<String> adapter;
 
-    public DetectForNearbyGames(ArrayAdapter adapter) {
+    public DetectForNearbyGames(ArrayAdapter<String> adapter) {
         this.adapter = adapter;
     }
 
@@ -24,7 +24,7 @@ public class DetectForNearbyGames implements CallbackObject {
     public void notifyServerChange(Map<String, WifiP2pDevice> availableServers) {
         for (Object o : availableServers.entrySet()) {
             Map.Entry pair = (Map.Entry) o;
-            adapter.add(pair.getKey());
+            adapter.add((String) pair.getKey());
         }
     }
 }

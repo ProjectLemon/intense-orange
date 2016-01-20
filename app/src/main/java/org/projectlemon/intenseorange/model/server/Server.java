@@ -3,22 +3,16 @@ package org.projectlemon.intenseorange.model.server;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ServiceInfo;
-import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceInfo;
-import android.widget.Toast;
 
 import org.projectlemon.intenseorange.controller.implementations.NetworkDevice;
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
-import org.projectlemon.intenseorange.model.utilities.Role;
 import org.projectlemon.intenseorange.model.utilities.helpers.CommonHelpers;
-import org.projectlemon.intenseorange.model.utilities.helpers.MessageHelper;
+import org.projectlemon.intenseorange.model.utilities.helpers.ServerMessageHelper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -35,7 +29,7 @@ public class Server extends NetworkDevice implements Runnable {
 
     private String serverName;
     private Map<String, ClientThread> connectedClients = new HashMap<>();
-    private MessageHelper msgHelper = new MessageHelper(Role.SERVER, this, null);
+    private ServerMessageHelper msgHelper = new ServerMessageHelper(this, null);
     private LinkedBlockingQueue<PDU> messageQueue = new LinkedBlockingQueue<>();
     private ConnectionListener connectionListener = new ConnectionListener(this);
 
@@ -48,12 +42,12 @@ public class Server extends NetworkDevice implements Runnable {
 
     @Override
     public void sendData(byte[] data) {
-
+        //TODO: implement
     }
 
     @Override
     public void receiveData(byte[] data) throws NullPointerException {
-
+        //TODO: implement
     }
 
     @Override

@@ -30,7 +30,7 @@ public class Client extends NetworkDevice implements Runnable {
     public WifiBroadcastReceiver receiver;
 
 
-    public Client(Context context, CallbackObject callable) throws IOException {
+    public Client(Context context, CallbackObject callable) {
         super(context, callable);
         receiver = new WifiBroadcastReceiver(mManager, mChannel);
     }

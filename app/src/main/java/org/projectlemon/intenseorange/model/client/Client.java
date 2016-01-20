@@ -1,11 +1,10 @@
-package org.projectlemon.intenseorange.model;
+package org.projectlemon.intenseorange.model.client;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceInfo;
 
 import org.projectlemon.intenseorange.controller.implementations.NetworkDevice;
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
@@ -22,22 +21,16 @@ import java.util.Map;
  * Created by Jenny on 2015-11-11.
  */
 public class Client extends NetworkDevice implements Runnable {
-    private int id = 0;
     String nickname;
     private InetAddress serverAddress;
     private Socket server;
     private Map<String, WifiP2pDevice> availableServers = new HashMap<>();
 
 
-
     public Client(Context context, CallbackObject callable) throws IOException {
         super(context, callable);
-        this.id = NetworkVariables.getID(); //TODO: I really don't think that this will work but I'll keep it for a while until we've discussed it
-        //this.serverAddress = serverAddress;
         server = new Socket(serverAddress.getHostName(), NetworkVariables.PORT);
-    }
-    public int getKey(){
-        return id;
+        WifiBroadcastReceiver receiver = new WifiBroadcastReceiver(mManager, mChannel);
     }
 
     @Override
@@ -67,6 +60,7 @@ public class Client extends NetworkDevice implements Runnable {
         if(!availableServers.containsKey(nickname)) {
             throw new IllegalArgumentException("Server not available");
         }
+
     }
 
     public Map<String, WifiP2pDevice> getAvailableServers() {
@@ -94,12 +88,12 @@ public class Client extends NetworkDevice implements Runnable {
 
         Client client = (Client) o;
 
-        if (id != client.id) return false;
         if (nickname != null ? !nickname.equals(client.nickname) : client.nickname != null)
             return false;
         if (serverAddress != null ? !serverAddress.equals(client.serverAddress) : client.serverAddress != null)
             return false;
-        return !(server != null ? !server.equals(client.server) : client.server != null);
+        if (server != null ? !server.equals(client.server) : client.server != null) return false;
+        return !(availableServers != null ? !availableServers.equals(client.availableServers) : client.availableServers != null);
 
     }
 
@@ -110,10 +104,10 @@ public class Client extends NetworkDevice implements Runnable {
      */
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+        int result = nickname != null ? nickname.hashCode() : 0;
         result = 31 * result + (serverAddress != null ? serverAddress.hashCode() : 0);
         result = 31 * result + (server != null ? server.hashCode() : 0);
+        result = 31 * result + (availableServers != null ? availableServers.hashCode() : 0);
         return result;
     }
 

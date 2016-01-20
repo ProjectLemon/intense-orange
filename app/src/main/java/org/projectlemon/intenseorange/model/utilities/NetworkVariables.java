@@ -9,9 +9,5 @@ package org.projectlemon.intenseorange.model.utilities;
 public class NetworkVariables {
     public static final short PORT = 29561;
     public static final int HEADER_SIZE = 16;
-    public static int ID = 0;
 
-    public static int getID() {
-        return ++ID;
-    }
 }

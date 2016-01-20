@@ -18,9 +18,9 @@
 
         android:textColor="@color/text_color"
         android:autoText="false"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp" />
+        android:layout_alignParentStart="true" />
 
     <EditText android:id="@+id/enter_game_name_text"
         android:layout_width="wrap_content"
@@ -28,11 +28,22 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=""
         android:hint="@string/enter_game_name"
-        android:layout_marginTop="37dp"
-        android:layout_below="@+id/InstructionText"
         android:textCursorDrawable="@null"
 
     android:background="@null"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_new_game"
+        android:onClick="startGame"
+        android:clickable="true"
+        android:layout_gravity="bottom"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -27,6 +27,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Server extends NetworkDevice implements Runnable {
 
+    public WifiBroadcastReceiver receiver;
     private String serverName;
     private Map<String, ClientThread> connectedClients = new HashMap<>();
     private ServerMessageHelper msgHelper = new ServerMessageHelper(this, null);
@@ -37,7 +38,7 @@ public class Server extends NetworkDevice implements Runnable {
         super(context, callable);
 
         this.serverName = serverName;
-        WifiBroadcastReceiver receiver = new WifiBroadcastReceiver(mManager, mChannel);
+        receiver = new WifiBroadcastReceiver(mManager, mChannel);
     }
 
     @Override
@@ -68,7 +69,6 @@ public class Server extends NetworkDevice implements Runnable {
         Thread t2 = new Thread(connectionListener);
         t1.start();
         t2.start();
-
     }
 
     /**
@@ -91,6 +91,15 @@ public class Server extends NetworkDevice implements Runnable {
     public void disconnectClient(ClientThread c) {
         msgHelper.removeClient(c);
         connectedClients.remove(c);
+    }
+
+    /**
+     * This method will update the current context to the server. This will have to be done
+     *
+     * @param ctx
+     */
+    public void uppdateContext(Context ctx) {
+        this.context = ctx;
     }
 
     /**
@@ -204,7 +213,6 @@ public class Server extends NetworkDevice implements Runnable {
                         callback.onError(reason);
                     }
                 });
-
 
             }
         }

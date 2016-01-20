@@ -28,6 +28,13 @@ public interface CallbackObject {
     void onError(int reason);
 
     /**
+     * This method is used to throw async exception from the system to the GUI
+     *
+     * @param e
+     */
+    void onException(Exception e);
+
+    /**
      * This method is called whenever the system detects a change in available servers
      *
      * @param availableServers a list of servers.

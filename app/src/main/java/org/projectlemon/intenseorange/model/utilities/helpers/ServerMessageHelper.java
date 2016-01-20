@@ -26,7 +26,8 @@ public class ServerMessageHelper implements Runnable{
 
     @Override
     public void run() {
-        /**
+
+        /*
          * If the message helper is used by the server:
          *  update the list of connected clients
          *  as long as the thread is running:

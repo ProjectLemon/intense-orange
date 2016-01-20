@@ -26,6 +26,10 @@ public class ServerDataRetriever implements CallbackObject {
     public void onError(int reason) {
     }
 
+    public void onException(Exception e ) {
+
+    }
+
     public void notifyServerChange(Map<String, WifiP2pDevice> availableServers) {
 
     }

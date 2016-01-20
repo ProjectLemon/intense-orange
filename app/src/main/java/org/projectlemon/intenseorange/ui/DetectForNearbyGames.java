@@ -20,6 +20,7 @@ public class DetectForNearbyGames implements CallbackObject {
 
     public void handleData(InputStream data) {}
     public void onError(int reason) {}
+    public void onException(Exception e) {}
 
     public void notifyServerChange(Map<String, WifiP2pDevice> availableServers) {
         for (Object o : availableServers.entrySet()) {

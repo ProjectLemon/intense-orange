@@ -20,7 +20,7 @@ public class MessageThread implements Runnable {
     public void run() {
         try {
             while(true) {
-                PDU pdu = PDU.fromInputStream(server.getInputStream());
+                //PDU pdu = PDU.fromInputStream(server.getInputStream());
                 //TODO: Handle receive pdu type
             }
 

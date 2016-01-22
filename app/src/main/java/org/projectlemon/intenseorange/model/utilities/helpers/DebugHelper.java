@@ -20,17 +20,22 @@ public class DebugHelper {
         this.threadName = name;
     }
 
+    /**
+     * Will print a dump of the current execution state of the program
+     */
     public void dump() {
         Date d = new Date();
         System.err.println("==========DUMP==========");
         System.err.println("["+d.toString()+"]"+" Dump by: "+threadName+"| created: "+creationTime);
         System.err.println("Other running threads and their status: ");
+        System.err.println("---");
         for(Thread t: currentThreads) {
             System.err.println("Name: "+t.getName()+"| id: "+
                                 t.getId()+"| State: "+
-                                t.getState()+"| Context Class: "+
-                                t.getContextClassLoader()+"| Alive: "+
+                                t.getState()+"| Alive: "+
                                 t.isAlive());
+            t.dumpStack();
+            System.err.println("---");
         }
         System.err.println("=========/DUMP==========");
     }

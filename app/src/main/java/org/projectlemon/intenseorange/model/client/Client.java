@@ -182,6 +182,7 @@ public class Client extends NetworkDevice implements Runnable {
                                                           Map<String, String> txtRecordMap,
                                                           WifiP2pDevice srcDevice) {
                         availableServers.put(fullDomainName, srcDevice);
+                        callback.notifyServerChange(availableServers);
                     }
                 };
             }

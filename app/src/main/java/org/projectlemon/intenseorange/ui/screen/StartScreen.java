@@ -13,7 +13,6 @@ import org.projectlemon.intenseorange.ui.DetectForNearbyGames;
 import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
-import java.io.IOException;
 
 
 /**

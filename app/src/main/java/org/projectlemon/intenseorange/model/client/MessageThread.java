@@ -3,7 +3,6 @@ package org.projectlemon.intenseorange.model.client;
 import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 

@@ -9,6 +9,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
 import android.util.Log;
 
+import org.projectlemon.intenseorange.R;
 import org.projectlemon.intenseorange.controller.implementations.NetworkDevice;
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.model.utilities.NetworkVariables;
@@ -27,7 +28,7 @@ public class Client extends NetworkDevice implements Runnable {
     String nickname;
     private InetAddress serverAddress;
     private Socket server;
-    private Map<String, WifiP2pDevice> availableServers = new HashMap<>();
+    private Map<String, Object> availableServers = new HashMap<>();
     private MessageThread messageThread = new MessageThread(server);
     public WifiBroadcastReceiver receiver;
 
@@ -72,7 +73,7 @@ public class Client extends NetworkDevice implements Runnable {
             throw new IllegalArgumentException("Server not available");
         }
 
-        WifiP2pDevice serverUnit = availableServers.get(nickname);
+        WifiP2pDevice serverUnit = (WifiP2pDevice) availableServers.get(nickname); //TODO: CHANGE!
         WifiP2pConfig config = new WifiP2pConfig();
         config.deviceAddress = serverUnit.deviceAddress;
         mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
@@ -93,9 +94,9 @@ public class Client extends NetworkDevice implements Runnable {
 
     }
 
-    public Map<String, WifiP2pDevice> getAvailableServers() {
+/*    public Map<String, WifiP2pDevice> getAvailableServers() {
         return this.availableServers;
-    }
+    }*/
 
     @Override
     public void setNickname(String nickname) {
@@ -177,47 +178,42 @@ public class Client extends NetworkDevice implements Runnable {
             if( !(state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) ) {
                 callback.onError(state);
             } else {
-                WifiP2pManager.DnsSdTxtRecordListener txtListener;
-                txtListener = setupRecordListener();
-
-                WifiP2pManager.DnsSdServiceResponseListener responseListener;
-                responseListener = setupResponseListener();
-
-                mManager.setDnsSdResponseListeners(mChannel, responseListener, txtListener);
-
-                WifiP2pDnsSdServiceRequest serviceRequest = WifiP2pDnsSdServiceRequest.newInstance();
-                mManager.addServiceRequest(mChannel,
-                        serviceRequest,
-                        new WifiP2pManager.ActionListener() {
-                            @Override
-                            public void onSuccess() {
-                                System.out.println("Add service request succeeded");
-                            }
-
-                            @Override
-                            public void onFailure(int code) {
-                                System.out.println("Add service request failed");
-                                callback.onError(code);
-                            }
-                        });
-
-                mManager.discoverServices(mChannel, new WifiP2pManager.ActionListener() {
-
+                WifiP2pManager.DnsSdTxtRecordListener txtListener = new WifiP2pManager.DnsSdTxtRecordListener() {
                     @Override
-                    public void onSuccess() {
-                        System.out.println("Discover services success");
+                    /* Callback includes:
+                     * fullDomain: full domain name: e.g "printer._ipp._tcp.local."
+                     * record: TXT record dta as a map of key/value pairs.
+                     * device: The device running the advertised service.
+                     */
+                    public void onDnsSdTxtRecordAvailable(
+                            String fullDomain, Map record, WifiP2pDevice device) {
+                        Log.d(null, "DnsSdTxtRecord available -" + record.toString());
+                        availableServers.put(device.deviceAddress, record.get("buddyname"));
                     }
-
+                };
+                WifiP2pManager.DnsSdServiceResponseListener servListener = new WifiP2pManager.DnsSdServiceResponseListener() {
                     @Override
-                    public void onFailure(int code) {
-                        System.out.println("Discover services failed");
-                        callback.onError(code);
+                    public void onDnsSdServiceAvailable(String instanceName, String registrationType,
+                                                        WifiP2pDevice resourceType) {
+
+                        // Update the device name with the human-friendly version from
+                        // the DnsTxtRecord, assuming one arrived.
+                        /*resourceType.deviceName = buddies
+                                .containsKey(resourceType.deviceAddress) ? buddies
+                                .get(resourceType.deviceAddress) : resourceType.deviceName;*/
+
+                        // Add to the custom adapter defined specifically for showing
+                        // wifi devices.
+                        callback.notifyServerChange(null);
+                        Log.d(null, "onBonjourServiceAvailable " + instanceName);
                     }
-                });
+                };
+
+                mManager.setDnsSdResponseListeners(mChannel, servListener, txtListener);
             }
         }
 
-        private WifiP2pManager.DnsSdTxtRecordListener setupRecordListener() {
+       /* private WifiP2pManager.DnsSdTxtRecordListener setupRecordListener() {
             return new WifiP2pManager.DnsSdTxtRecordListener() {
                 @Override
                 public void onDnsSdTxtRecordAvailable(
@@ -238,6 +234,6 @@ public class Client extends NetworkDevice implements Runnable {
                     callback.notifyServerChange(availableServers);
                 }
             };
-        }
+        }*/
     }
 }

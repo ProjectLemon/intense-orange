@@ -9,6 +9,7 @@ import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceInfo;
 
 import org.projectlemon.intenseorange.controller.implementations.NetworkDevice;
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
+import org.projectlemon.intenseorange.model.utilities.NetworkVariables;
 import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
 import org.projectlemon.intenseorange.model.utilities.helpers.CommonHelpers;
 import org.projectlemon.intenseorange.model.utilities.helpers.ServerMessageHelper;
@@ -202,23 +203,31 @@ public class Server extends NetworkDevice implements Runnable {
             if( !(state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) ) {
                 callback.onError(state);
             } else {
-                Map<String, String> serverInfo = new HashMap<>();
-                serverInfo.put("serverName", serverName);
+                //  Create a string map containing information about your service.
+                Map record = new HashMap();
+                record.put("listenport", String.valueOf(NetworkVariables.PORT));
+                record.put("buddyname", "John Doe" + (int) (Math.random() * 1000));
+                record.put("available", "visible");
 
-                WifiP2pDnsSdServiceInfo serviceInfo;
-                serviceInfo = WifiP2pDnsSdServiceInfo.newInstance(serverName,
-                        "._tcp", serverInfo);
+                // Service information.  Pass it an instance name, service type
+                // _protocol._transportlayer , and the map containing
+                // information other devices will want once they connect to this one.
+                WifiP2pDnsSdServiceInfo serviceInfo =
+                        WifiP2pDnsSdServiceInfo.newInstance("_test", "_presence._tcp", record);
 
-                mManager.addLocalService(mChannel, serviceInfo, new WifiP2pManager.ActionListener(){
+                // Add the local service, sending the service info, network channel,
+                // and listener that will be used to indicate success or failure of
+                // the request.
+                mManager.addLocalService(mChannel, serviceInfo, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
-                        System.out.println("Added local service");
+                        // Command successful! Code isn't necessarily needed here,
+                        // Unless you want to update the UI or add logging statements.
                     }
 
                     @Override
-                    public void onFailure(int reason) {
-                        System.out.println("Failed to add local service");
-                        callback.onError(reason);
+                    public void onFailure(int arg0) {
+                        // Command failed.  Check for P2P_UNSUPPORTED, ERROR, or BUSY
                     }
                 });
 

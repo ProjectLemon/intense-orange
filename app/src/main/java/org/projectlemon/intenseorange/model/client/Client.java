@@ -37,6 +37,7 @@ public class Client extends NetworkDevice implements Runnable {
     public Client(Context context, CallbackObject callable) {
         super(context, callable);
         receiver = new WifiBroadcastReceiver(mManager, mChannel);
+        context.registerReceiver(receiver, intentFilter);
         debugHelper = new DebugHelper("Client");
     }
 
@@ -96,7 +97,6 @@ public class Client extends NetworkDevice implements Runnable {
                 callback.onError(reason);
             }
         });
-
     }
 
     public Map<String, WifiP2pDevice> getAvailableServers() {

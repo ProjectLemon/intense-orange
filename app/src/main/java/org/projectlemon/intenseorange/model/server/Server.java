@@ -43,6 +43,7 @@ public class Server extends NetworkDevice implements Runnable {
         super(context, callable);
         this.serverName = serverName;
         receiver = new WifiBroadcastReceiver(mManager, mChannel);
+        context.registerReceiver(receiver, intentFilter);
         this.debugHelper = new DebugHelper("Server");
     }
 
@@ -79,6 +80,7 @@ public class Server extends NetworkDevice implements Runnable {
         DebugHelper.addThread(t1);
         DebugHelper.addThread(t2);
         debugHelper.dump();
+        debugHelper.log("Test");
     }
 
     /**

@@ -28,6 +28,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Server extends NetworkDevice implements Runnable {
 
+
     public WifiBroadcastReceiver receiver;
     private String serverName;
     private Map<String, ClientThread> connectedClients = new HashMap<>();
@@ -210,10 +211,13 @@ public class Server extends NetworkDevice implements Runnable {
 
                 mManager.addLocalService(mChannel, serviceInfo, new WifiP2pManager.ActionListener(){
                     @Override
-                    public void onSuccess() {  }
+                    public void onSuccess() {
+                        System.out.println("Added local service");
+                    }
 
                     @Override
                     public void onFailure(int reason) {
+                        System.out.println("Failed to add local service");
                         callback.onError(reason);
                     }
                 });

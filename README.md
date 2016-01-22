@@ -1,19 +1,21 @@
-# Intense Orange
+#Intense Orange
+Intense Orange is a party game for android that is built upon the wifi direct
+technology in order to create a party game that is a mixture of a videogame   
+and a boardgame. 
 
-Intense orange is a working title for this android party game.
+One phone is selected to be the game leader and board while the players split up
+into teams where one phone in each team connects to the game leader phone and
+will be used as that teams controller.
 
-We are currently working on a formal specification for this project so that the purpose of this project will be crystal clear to everyone who likes to contribute.
+##Open source
+At it's core, intense orange really is a platform that will allow parts to be
+added. When the final product is released everyone will be able to use our
+framwork to integrate their own minigames and contribute to the intense.
 
-## We ❤ contributors 
+##Contribute
+Since the base is not completed yet. You will not be able to build any games for
+it. However, there is always the possibility to help out with the development of
+the foundation so that it will hit release faster!
 
-We would love to see you contribute to this project so feel free to do so by open issues, posting comments and submitting pull requests (PQ)
 
-If you want to submit a PQ go ahead and follow these steps:
-
-1. Your PQ should refer to an issue that you are trying to solve. (If no issue exists that matches your PQ. Create one)
-
-2. Include in your PQ, comments about what you've done and why
-
-3. Your code should be well tested and include tests + test result
-
-When your PQ includes all of this, we will review it and if we find it usefull. We will include it.
+ 

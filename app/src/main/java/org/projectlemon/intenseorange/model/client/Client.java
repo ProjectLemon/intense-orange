@@ -145,8 +145,8 @@ public class Client extends NetworkDevice implements Runnable {
      * Class: WifiBroadcastReceiver
      *
      * Purpose: WifiBroadcastReceiver is a broadcast receiver that will respond do system messages
-     * related to wifi direct. It focuses on state change and peers change in order to
-     * discover if wifi direct is available and if there are any incoming connections.
+     *          related to wifi direct. It focuses on state change and peers change in order to
+     *          discover if wifi direct is available and if there are any incoming connections.
      */
     public class WifiBroadcastReceiver extends BroadcastReceiver {
         WifiP2pManager mManager;
@@ -217,6 +217,10 @@ public class Client extends NetworkDevice implements Runnable {
             }
         }
 
+        /*
+        * Creates the DnsTxt-listener to use for receiving local services broadcast
+        * from the server
+        */
         private WifiP2pManager.DnsSdTxtRecordListener setupRecordListener() {
             return new WifiP2pManager.DnsSdTxtRecordListener() {
                 @Override
@@ -228,6 +232,11 @@ public class Client extends NetworkDevice implements Runnable {
                 }
             };
         }
+
+        /*
+        * Creates a DnsResponse-Listener to use for receiving local services broadcast
+        * from the server
+        */
         private WifiP2pManager.DnsSdServiceResponseListener setupResponseListener() {
             return new WifiP2pManager.DnsSdServiceResponseListener() {
                 @Override

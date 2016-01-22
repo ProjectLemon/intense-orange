@@ -18,10 +18,11 @@ public class CommonHelpers {
     }
 
     /**
+     * This method is used to remove the full domain name from the server broadcast in order to
+     * display it properly.
      *
-     *
-     * @param str
-     * @return
+     * @param str the string to extract name from
+     * @return the name without domain
      */
     public static String extractServerName(String str) {
         String returnstring = new String();

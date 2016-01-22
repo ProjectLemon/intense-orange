@@ -26,6 +26,7 @@ public class DetectForNearbyGames implements CallbackObject {
         for (Object o : availableServers.entrySet()) {
             Map.Entry pair = (Map.Entry) o;
             adapter.add((String) pair.getKey());
+            adapter.notifyDataSetChanged();
         }
     }
 }

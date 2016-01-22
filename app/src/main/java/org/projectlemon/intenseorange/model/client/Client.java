@@ -185,6 +185,7 @@ public class Client extends NetworkDevice implements Runnable {
                         callback.notifyServerChange(availableServers);
                     }
                 };
+                mManager.setDnsSdResponseListeners(mChannel, null, txtListener);
             }
         }
 

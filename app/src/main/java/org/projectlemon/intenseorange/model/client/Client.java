@@ -164,7 +164,7 @@ public class Client extends NetworkDevice implements Runnable {
         }
 
         /**
-         * This method will try to resolve why the wifip2p-state changed. If wifip2p was enbled
+         * This method will try to resolve why the wifip2p-state changed. If wifip2p was enabled
          * it will start broadcast a local service telling everyone around that they are
          * available to connect to.
          *

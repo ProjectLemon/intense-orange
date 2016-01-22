@@ -14,7 +14,6 @@ import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
 
-
 /**
  * First screen the user sees. Displays the ability to start a new game and to join others
  */

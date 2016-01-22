@@ -11,6 +11,8 @@ import org.projectlemon.intenseorange.ui.screen.Screen;
 
 public class Lobby extends Screen {
 
+    private Server server;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +22,21 @@ public class Lobby extends Screen {
         String serverName = intent.getStringExtra("serverName");
 
         CallbackObject callback = new ServerDataRetriever();
-        Server server = new Server(this, callback, serverName);
+        server = new Server(this, callback, serverName);
         new Thread(server).start();
+    }
+
+    /* register the broadcast receiver with the intent values to be matched */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(server.receiver, server.intentFilter);
+    }
+    /* unregister the broadcast receiver */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(server.receiver);
     }
 }
 

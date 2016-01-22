@@ -207,7 +207,7 @@ public class Server extends NetworkDevice implements Runnable {
 
                 WifiP2pDnsSdServiceInfo serviceInfo;
                 serviceInfo = WifiP2pDnsSdServiceInfo.newInstance(serverName,
-                        "._intense-orange-server", serverInfo);
+                        "._tcp", serverInfo);
 
                 mManager.addLocalService(mChannel, serviceInfo, new WifiP2pManager.ActionListener(){
                     @Override

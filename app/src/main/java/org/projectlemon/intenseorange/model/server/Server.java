@@ -12,6 +12,7 @@ import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.model.utilities.NetworkVariables;
 import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
 import org.projectlemon.intenseorange.model.utilities.helpers.CommonHelpers;
+import org.projectlemon.intenseorange.model.utilities.helpers.DebugHelper;
 import org.projectlemon.intenseorange.model.utilities.helpers.ServerMessageHelper;
 
 import java.util.HashMap;
@@ -36,12 +37,13 @@ public class Server extends NetworkDevice implements Runnable {
     private ServerMessageHelper msgHelper = new ServerMessageHelper(this, null);
     private LinkedBlockingQueue<PDU> messageQueue = new LinkedBlockingQueue<>();
     private ConnectionListener connectionListener = new ConnectionListener(this);
+    private DebugHelper debugHelper;
 
     public Server(Context context, CallbackObject callable, String serverName) {
         super(context, callable);
-
         this.serverName = serverName;
         receiver = new WifiBroadcastReceiver(mManager, mChannel);
+        this.debugHelper = new DebugHelper("Server");
     }
 
     @Override
@@ -70,8 +72,13 @@ public class Server extends NetworkDevice implements Runnable {
     public void run() {
         Thread t1 = new Thread(msgHelper);
         Thread t2 = new Thread(connectionListener);
+        t1.setName("MessageHelper");
+        t2.setName("ConnectionListener");
         t1.start();
         t2.start();
+        DebugHelper.addThread(t1);
+        DebugHelper.addThread(t2);
+        debugHelper.dump();
     }
 
     /**
@@ -224,7 +231,7 @@ public class Server extends NetworkDevice implements Runnable {
 
                     @Override
                     public void onFailure(int arg0) {
-                        System.out.println("Failed to add local service on server");
+                        debugHelper.log("Failed to add local service");
                         callback.onError(arg0);
                     }
                 });

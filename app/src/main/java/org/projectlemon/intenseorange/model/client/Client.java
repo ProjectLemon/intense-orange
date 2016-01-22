@@ -12,6 +12,7 @@ import org.projectlemon.intenseorange.controller.implementations.NetworkDevice;
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.model.utilities.NetworkVariables;
 import org.projectlemon.intenseorange.model.utilities.helpers.CommonHelpers;
+import org.projectlemon.intenseorange.model.utilities.helpers.DebugHelper;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -24,6 +25,7 @@ import java.util.Map;
  */
 public class Client extends NetworkDevice implements Runnable {
     String nickname;
+    private DebugHelper debugHelper;
     private InetAddress serverAddress;
     private Socket server;
     private Map<String, WifiP2pDevice> availableServers = new HashMap<>();
@@ -35,12 +37,16 @@ public class Client extends NetworkDevice implements Runnable {
     public Client(Context context, CallbackObject callable) {
         super(context, callable);
         receiver = new WifiBroadcastReceiver(mManager, mChannel);
+        debugHelper = new DebugHelper("Client");
     }
 
     @Override
     public void run() {
         Thread t1 = new Thread(messageThread);
+        t1.setName("MessageThread");
         t1.start();
+        DebugHelper.addThread(t1);
+        debugHelper.dump();
     }
 
     @Override

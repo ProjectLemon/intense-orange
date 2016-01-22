@@ -1,7 +1,6 @@
 #Intense Orange
 Intense Orange is a party game for android that is built upon the wifi direct
-technology in order to create a party game that is a mixture of a videogame   
-and a boardgame. 
+technology in order to create a party game that is a mixture of a videogame and a boardgame. 
 
 One phone is selected to be the game leader and board while the players split up
 into teams where one phone in each team connects to the game leader phone and

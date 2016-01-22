@@ -27,6 +27,7 @@ public class Client extends NetworkDevice implements Runnable {
     private InetAddress serverAddress;
     private Socket server;
     private Map<String, WifiP2pDevice> availableServers = new HashMap<>();
+    private Map<String, Map<String,String>> connectionInfo = new HashMap<>();
     private MessageThread messageThread = new MessageThread(server);
     public WifiBroadcastReceiver receiver;
 
@@ -222,8 +223,8 @@ public class Client extends NetworkDevice implements Runnable {
                 public void onDnsSdTxtRecordAvailable(
                         String fullDomainName, Map<String, String> txtRecordMap, WifiP2pDevice srcDevice) {
                     System.out.println("onDnsSdTxtRecordAvailable");
-                    availableServers.put(fullDomainName, srcDevice);
-                    callback.notifyServerChange(availableServers);
+                    String sname = CommonHelpers.extractServerName(fullDomainName);
+                    connectionInfo.put(sname, txtRecordMap);
                 }
             };
         }

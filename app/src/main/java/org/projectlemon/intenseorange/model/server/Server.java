@@ -206,28 +206,26 @@ public class Server extends NetworkDevice implements Runnable {
                 //  Create a string map containing information about your service.
                 Map record = new HashMap();
                 record.put("listenport", String.valueOf(NetworkVariables.PORT));
-                record.put("buddyname", "John Doe" + (int) (Math.random() * 1000));
+                record.put("servername", serverName);
                 record.put("available", "visible");
 
                 // Service information.  Pass it an instance name, service type
                 // _protocol._transportlayer , and the map containing
                 // information other devices will want once they connect to this one.
                 WifiP2pDnsSdServiceInfo serviceInfo =
-                        WifiP2pDnsSdServiceInfo.newInstance("_test", "_presence._tcp", record);
+                        WifiP2pDnsSdServiceInfo.newInstance(serverName, "_presence._tcp", record);
 
                 // Add the local service, sending the service info, network channel,
                 // and listener that will be used to indicate success or failure of
                 // the request.
                 mManager.addLocalService(mChannel, serviceInfo, new WifiP2pManager.ActionListener() {
                     @Override
-                    public void onSuccess() {
-                        // Command successful! Code isn't necessarily needed here,
-                        // Unless you want to update the UI or add logging statements.
-                    }
+                    public void onSuccess() {}
 
                     @Override
                     public void onFailure(int arg0) {
-                        // Command failed.  Check for P2P_UNSUPPORTED, ERROR, or BUSY
+                        System.out.println("Failed to add local service on server");
+                        callback.onError(arg0);
                     }
                 });
 

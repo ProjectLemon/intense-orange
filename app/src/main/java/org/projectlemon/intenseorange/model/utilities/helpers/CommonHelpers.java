@@ -16,4 +16,21 @@ public class CommonHelpers {
     public static boolean isNullOrEmpty(String str) {
         return str == null || str.isEmpty();
     }
+
+    /**
+     *
+     *
+     * @param str
+     * @return
+     */
+    public static String extractServerName(String str) {
+        String returnstring = new String();
+        for(int i = 0; i < str.length(); ++i) {
+            if (str.charAt(i) == '.') {
+                break;
+            }
+            returnstring += str.charAt(i);
+        }
+        return returnstring;
+    }
 }

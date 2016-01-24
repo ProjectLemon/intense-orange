@@ -21,7 +21,7 @@ public abstract class PDU{
             case 1:
                 return new disconnectPDU(inputStream);
             case 2:
-                return new ackPDU(inputStream);
+                return new AckPDU(inputStream);
             case 3:
                 return new changeNickPDU(inputStream);
             case 4:

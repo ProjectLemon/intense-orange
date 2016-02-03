@@ -27,6 +27,7 @@ public class ConnectionListener implements Runnable{
                 }
             }
         } catch (IOException e) {
+            server.getDebugHelper().dump();
             e.printStackTrace();
         }
     }

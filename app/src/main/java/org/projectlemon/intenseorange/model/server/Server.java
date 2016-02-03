@@ -133,6 +133,10 @@ public class Server extends NetworkDevice implements Runnable {
         return messageQueue;
     }
 
+    public DebugHelper getDebugHelper() {
+        return this.debugHelper;
+    }
+
     /**
      * Intellij generated method
      *
@@ -240,7 +244,6 @@ public class Server extends NetworkDevice implements Runnable {
 
             }
         }
-
     }
 }
 

@@ -1,6 +1,7 @@
 package org.projectlemon.intenseorange.ui.screen;
 
 import android.content.Intent;
+import android.net.wifi.p2p.WifiP2pDevice;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,8 @@ import org.projectlemon.intenseorange.ui.DetectForNearbyGames;
 import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
+import java.util.Map;
+
 
 /**
  * First screen the user sees. Displays the ability to start a new game and to join others
@@ -20,6 +23,8 @@ import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 public class StartScreen extends Screen {
 
     private Client client;
+    private Map<String, WifiP2pDevice> availableServers;
+    private CallbackObject detecter;
     /**
      * Setup screen with Client to look for nearby games and
      * display the to the user.
@@ -32,9 +37,10 @@ public class StartScreen extends Screen {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.view_list_item);
         ((ListView) findViewById(R.id.nearby_games_list)).setAdapter(adapter);
 
-        CallbackObject detecter = new DetectForNearbyGames(adapter);
+        detecter = new DetectForNearbyGames(adapter);
         client = new Client(this, detecter);
         new Thread(client).start();
+        registerReceiver(client.receiver, client.intentFilter);
     }
 
     /**
@@ -61,6 +67,8 @@ public class StartScreen extends Screen {
     @Override
     protected void onResume() {
         super.onResume();
+        availableServers = client.getAvailableServers();
+        detecter.notifyServerChange(availableServers);
         registerReceiver(client.receiver, client.intentFilter);
     }
     /* unregister the broadcast receiver */

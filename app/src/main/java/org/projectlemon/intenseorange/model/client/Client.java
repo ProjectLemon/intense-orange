@@ -251,6 +251,7 @@ public class Client extends NetworkDevice implements Runnable {
                     System.out.println("onDnsSdServiceAvailable");
                     availableServers.put(instanceName, srcDevice);
                     callback.notifyServerChange(availableServers);
+                    debugHelper.log("Discovered: "+ instanceName);
                 }
             };
         }

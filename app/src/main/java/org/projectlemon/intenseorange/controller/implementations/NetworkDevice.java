@@ -22,7 +22,6 @@ public abstract class NetworkDevice {
     protected WifiP2pManager.Channel mChannel;
     protected CallbackObject callback;
     protected Context context;
-    private String threadAlias;
 
     public NetworkDevice(Context context, CallbackObject callable) {
         this.context = context;

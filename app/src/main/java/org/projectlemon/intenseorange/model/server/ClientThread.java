@@ -59,6 +59,7 @@ public class ClientThread implements Runnable{
             out.write(msg.toByteArray());
         } catch (IOException e) {
             try {
+                server.getDebugHelper().dump();
                 socket.close();
                 server.disconnectClient(this);
             }

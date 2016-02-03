@@ -5,9 +5,15 @@ import java.io.InputStream;
 /**
  * Created by Jenny on 2016-01-20.
  */
-public class changeNickPDU extends PDU {
-    public changeNickPDU(InputStream inputStream) {
+public class ChangeNickPDU extends PDU {
+    private String nickname;
+    public ChangeNickPDU(InputStream inputStream) {
         super();
+    }
+
+    public ChangeNickPDU(String nickname){
+        super();
+        this.nickname = nickname;
     }
 
     @Override

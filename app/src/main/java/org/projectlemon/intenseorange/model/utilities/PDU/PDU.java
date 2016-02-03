@@ -19,11 +19,11 @@ public abstract class PDU{
             case 0:
                 return new connectPDU(inputStream);
             case 1:
-                return new disconnectPDU(inputStream);
+                return new DisconnectPDU(inputStream);
             case 2:
                 return new AckPDU(inputStream);
             case 3:
-                return new changeNickPDU(inputStream);
+                return new ChangeNickPDU(inputStream);
             case 4:
                 return new messagePDU(inputStream);
             case 5:

@@ -7,6 +7,7 @@ import org.projectlemon.intenseorange.model.utilities.PDU.PDUIdentifier;
 import static junit.framework.Assert.*;
 
 /**
+ * Class for testing Ack PDU
  * Created by Jenny on 2016-01-24.
  */
 public class AckPDUTest {

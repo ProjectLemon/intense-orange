@@ -10,6 +10,7 @@ import android.widget.ListView;
 import org.projectlemon.intenseorange.R;
 import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 import org.projectlemon.intenseorange.model.client.Client;
+import org.projectlemon.intenseorange.model.utilities.helpers.DebugHelper;
 import org.projectlemon.intenseorange.ui.DetectForNearbyGames;
 import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
@@ -25,6 +26,7 @@ public class StartScreen extends Screen {
     private Client client;
     private Map<String, WifiP2pDevice> availableServers;
     private CallbackObject detecter;
+    private DebugHelper debug = new DebugHelper("StartScreen");
     /**
      * Setup screen with Client to look for nearby games and
      * display the to the user.
@@ -76,5 +78,11 @@ public class StartScreen extends Screen {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(client.receiver);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        debug.log("onStop()");
     }
 }

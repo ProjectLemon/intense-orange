@@ -1,6 +1,8 @@
 package org.projectlemon.intenseorange.ui.screen;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,6 +15,9 @@ import org.projectlemon.intenseorange.ui.DetectForNearbyGames;
 import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * First screen the user sees. Displays the ability to start a new game and to join others
@@ -20,6 +25,8 @@ import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 public class StartScreen extends Screen {
 
     private Client client;
+    private Set<String> nearbyServers;
+    private SharedPreferences storedData;
     /**
      * Setup screen with Client to look for nearby games and
      * display the to the user.
@@ -35,6 +42,9 @@ public class StartScreen extends Screen {
         CallbackObject detecter = new DetectForNearbyGames(adapter);
         client = new Client(this, detecter);
         new Thread(client).start();
+
+        storedData = this.getSharedPreferences("serverInfo", Activity.MODE_PRIVATE);
+        nearbyServers = storedData.getStringSet("nearbyServers", new HashSet<String>());
     }
 
     /**
@@ -63,10 +73,21 @@ public class StartScreen extends Screen {
         super.onResume();
         registerReceiver(client.receiver, client.intentFilter);
     }
+
+
     /* unregister the broadcast receiver */
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(client.receiver);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        SharedPreferences.Editor ed = storedData.edit();
+        ed.putStringSet("nearbyServers", nearbyServers);
+        ed.commit();
     }
 }

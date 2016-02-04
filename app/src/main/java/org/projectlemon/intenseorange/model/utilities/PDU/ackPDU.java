@@ -6,6 +6,8 @@ import org.projectlemon.intenseorange.model.utilities.helpers.ByteHelper;
 import java.io.InputStream;
 
 /**
+ * Sends to show that the client or the server has received a message that's
+ * been accepted from an other part
  * Created by Jenny on 2016-01-20.
  */
 public class AckPDU extends PDU {
@@ -13,6 +15,7 @@ public class AckPDU extends PDU {
     public AckPDU(InputStream inputStream) {
         super();
     }
+
     public AckPDU(PDUIdentifier identifierToSend){
       super();
         this.identifierToSend=identifierToSend;

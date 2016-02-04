@@ -1,7 +1,9 @@
 package org.projectlemon.intenseorange.ui.screen;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,8 @@ import org.projectlemon.intenseorange.ui.screen.client.TeamSetup;
 import org.projectlemon.intenseorange.ui.screen.server.GameSetup;
 
 import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -27,6 +31,8 @@ public class StartScreen extends Screen {
     private Map<String, WifiP2pDevice> availableServers;
     private CallbackObject detecter;
     private DebugHelper debug = new DebugHelper("StartScreen");
+    private Set<String> nearbyServers;
+    private SharedPreferences storedData;
     /**
      * Setup screen with Client to look for nearby games and
      * display the to the user.
@@ -43,6 +49,9 @@ public class StartScreen extends Screen {
         client = new Client(this, detecter);
         new Thread(client).start();
         registerReceiver(client.receiver, client.intentFilter);
+
+        storedData = this.getSharedPreferences("serverInfo", Activity.MODE_PRIVATE);
+        nearbyServers = storedData.getStringSet("nearbyServers", new HashSet<String>());
     }
 
     /**
@@ -73,6 +82,8 @@ public class StartScreen extends Screen {
         detecter.notifyServerChange(availableServers);
         registerReceiver(client.receiver, client.intentFilter);
     }
+
+
     /* unregister the broadcast receiver */
     @Override
     protected void onPause() {
@@ -84,5 +95,9 @@ public class StartScreen extends Screen {
     protected void onStop() {
         super.onStop();
         debug.log("onStop()");
+
+        SharedPreferences.Editor ed = storedData.edit();
+        ed.putStringSet("nearbyServers", nearbyServers);
+        ed.commit();
     }
 }

@@ -34,9 +34,13 @@ public class ChangeNickPDUTest {
 
     @Test
     public void testIfCorrectNickname(){
-        //TODO Not sure that this will actually work. 
+        //TODO Not sure that this will actually work.
         byte[] nickBytes = new byte[pduByteArray[1]];
         System.arraycopy(pduByteArray, 4, nickBytes, 0, nickBytes.length);
-        assertEquals(nickname, new String(nickBytes, UTF_8));
+        assertEquals(nickname, new String(nickBytes));
+    }
+    @Test
+    public void testIfCorrectLength(){
+        assertEquals(16, pduByteArray.length);
     }
 }

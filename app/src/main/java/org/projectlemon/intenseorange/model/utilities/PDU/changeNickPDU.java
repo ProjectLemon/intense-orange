@@ -1,5 +1,7 @@
 package org.projectlemon.intenseorange.model.utilities.PDU;
 
+import org.projectlemon.intenseorange.model.utilities.helpers.ByteHelper;
+
 import java.io.InputStream;
 
 /**
@@ -18,6 +20,12 @@ public class ChangeNickPDU extends PDU {
 
     @Override
     public byte[] toByteArray() {
-        return new byte[0];
+        byte[] nicknameAsBytes = nickname.getBytes();
+        ByteHelper helper = new ByteHelper();
+        helper.addByte(PDUIdentifier.CHANGENICK.value,(byte)nickname.length());
+        helper.pad();
+        helper.addByte(nicknameAsBytes);
+        helper.pad();
+        return helper.toByteArray();
     }
 }

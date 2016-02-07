@@ -25,7 +25,7 @@ public abstract class PDU{
             case 3:
                 return new ChangeNickPDU(inputStream);
             case 4:
-                return new messagePDU(inputStream);
+                return new MessagePDU(inputStream);
             case 5:
                 return new errorPDU(inputStream);
         }

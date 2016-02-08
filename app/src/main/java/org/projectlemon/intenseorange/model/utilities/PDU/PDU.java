@@ -33,4 +33,14 @@ public abstract class PDU{
         throw new UnsupportedOperationException("Not yet implemented");
     }
     public abstract byte[] toByteArray();
+
+    public static long byteArrayToLong(byte[] bytes, int start, int stop) {
+
+        long result = 0;
+        for (int i = start; i < stop; i++) {
+            result <<= 8;
+            result += ((long) bytes[i]) & 0xff;
+        }
+        return result;
+    }
 }

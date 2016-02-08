@@ -1,9 +1,9 @@
 package org.projectlemon.intenseorange;
 
-import android.os.Message;
 
 import org.junit.Test;
 import org.projectlemon.intenseorange.model.utilities.PDU.MessagePDU;
+import org.projectlemon.intenseorange.model.utilities.PDU.PDU;
 import org.projectlemon.intenseorange.model.utilities.PDU.PDUIdentifier;
 
 import java.util.Date;
@@ -27,19 +27,34 @@ public class MessagePDUTest {
 
     @Test
     public void testIfCorrectMessageLength(){
-        assertEquals((byte)message.length(),pduAsBytes[1]);
+        int messageLength = message.getBytes().length;
+        assertEquals((byte)messageLength,pduAsBytes[1]);
     }
 
     @Test
     public void testIfCorrectNicknameLength(){
-        assertEquals((byte)message.length(),pduAsBytes[2]);
+        int nicknamelength = nickname.getBytes().length;
+        assertEquals((byte)nicknamelength,pduAsBytes[2]);
     }
     @Test
     public void testIfPaddedSpot(){
-        assertEquals((byte)message.length(),pduAsBytes[3]);
+        assertEquals((byte)0,pduAsBytes[3]);
     }
+
     @Test
     public void testIfCorrectTimeStamp(){
+            Date actualDate = new Date(PDU.byteArrayToLong(pduAsBytes, 4, 8) * 1000);
+            Date cmpDate = new Date((timestamp.getTime() / 1000) * 1000);
+            assertEquals(cmpDate, actualDate);
+    }
+    @Test
+    public void testIfCorrectNickname(){
+        byte[] nickBytes = new byte[pduAsBytes[2]];
+        System.arraycopy(pduAsBytes, 9, nickBytes, 0, nickBytes.length);
+        assertEquals(nickname, new String(nickBytes));
+    }
+    @Test
+    public void testIfCorrectMessage(){
 
     }
 }

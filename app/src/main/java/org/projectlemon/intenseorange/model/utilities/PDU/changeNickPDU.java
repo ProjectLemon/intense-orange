@@ -22,10 +22,10 @@ public class ChangeNickPDU extends PDU {
     public byte[] toByteArray() {
         byte[] nicknameAsBytes = nickname.getBytes();
         ByteHelper helper = new ByteHelper();
-        helper.addByte(PDUIdentifier.CHANGENICK.value,(byte)nickname.length());
+        helper.addByte(PDUIdentifier.CHANGENICK.value,(byte)nicknameAsBytes.length);
         helper.pad();
         helper.addByte(nicknameAsBytes);
         helper.pad();
-        return helper.toByteArray();
+       return helper.toByteArray();
     }
 }

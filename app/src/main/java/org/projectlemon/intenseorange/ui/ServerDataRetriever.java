@@ -7,6 +7,7 @@ import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * File: ServerDataRetriever.java
@@ -31,6 +32,10 @@ public class ServerDataRetriever implements CallbackObject {
     }
 
     public void notifyServerChange(Map<String, WifiP2pDevice> availableServers) {
+
+    }
+
+    public void notifyServerChange(Set<String> availableServers) {
 
     }
 }

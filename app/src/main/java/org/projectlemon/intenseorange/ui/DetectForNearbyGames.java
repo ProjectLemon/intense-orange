@@ -8,6 +8,7 @@ import org.projectlemon.intenseorange.controller.interfaces.CallbackObject;
 
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Set;
 
 
 public class DetectForNearbyGames implements CallbackObject {
@@ -26,6 +27,13 @@ public class DetectForNearbyGames implements CallbackObject {
         for (Object o : availableServers.entrySet()) {
             Map.Entry pair = (Map.Entry) o;
             adapter.add((String) pair.getKey());
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void notifyServerChange(Set<String> availableServers) {
+        for (String o : availableServers) {
+            adapter.add(o);
             adapter.notifyDataSetChanged();
         }
     }

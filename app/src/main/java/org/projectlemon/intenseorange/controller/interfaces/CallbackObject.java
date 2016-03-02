@@ -4,6 +4,7 @@ import android.net.wifi.p2p.WifiP2pDevice;
 
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This class declares an interface for a callback object that is used by the view to receive data
@@ -40,4 +41,5 @@ public interface CallbackObject {
      * @param availableServers a list of servers.
      */
     void notifyServerChange(Map<String,WifiP2pDevice> availableServers);
+    void notifyServerChange(Set<String> availableServers);
 }

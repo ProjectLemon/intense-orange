@@ -17,7 +17,7 @@ public abstract class PDU{
 
         switch(identifyer){
             case 0:
-                return new connectPDU(inputStream);
+                return new ConnectPDU(inputStream);
             case 1:
                 return new DisconnectPDU(inputStream);
             case 2:
@@ -27,7 +27,7 @@ public abstract class PDU{
             case 4:
                 return new MessagePDU(inputStream);
             case 5:
-                return new errorPDU(inputStream);
+                return new ErrorPDU(inputStream);
         }
         //TODO: Implement
         throw new UnsupportedOperationException("Not yet implemented");

@@ -5,8 +5,8 @@ import java.io.InputStream;
 /**
  * Created by Jenny on 2016-01-20.
  */
-public class errorPDU extends PDU {
-    public errorPDU(InputStream inputStream) {
+public class ErrorPDU extends PDU {
+    public ErrorPDU(InputStream inputStream) {
         super();
     }
 

@@ -11,6 +11,7 @@ import static junit.framework.Assert.*;
 
 
 /**
+ * Test the PDU to be send as messages between clients and clients or clients and server.
  * Created by Jenny on 2016-02-07.
  */
 public class MessagePDUTest {
@@ -50,11 +51,22 @@ public class MessagePDUTest {
     @Test
     public void testIfCorrectNickname(){
         byte[] nickBytes = new byte[pduAsBytes[2]];
-        System.arraycopy(pduAsBytes, 9, nickBytes, 0, nickBytes.length);
+        System.arraycopy(pduAsBytes, 8, nickBytes, 0, nickBytes.length);
         assertEquals(nickname, new String(nickBytes));
     }
     @Test
     public void testIfCorrectMessage(){
-
+        byte[] messageBytes = new byte[pduAsBytes[1]];
+        byte[] nicklength=new byte[pduAsBytes[2]];
+        System.arraycopy(pduAsBytes, 8 + nicklength.length, messageBytes, 0, messageBytes.length);
+        assertEquals(message ,new String(messageBytes));
+    }
+    @Test
+    public void testIfCorrectLength(){
+        int correctlenght=8+nickname.getBytes().length+message.getBytes().length;
+        while(correctlenght%4!=0){
+            correctlenght++;
+        }
+        assertEquals(correctlenght, pduAsBytes.length);
     }
 }

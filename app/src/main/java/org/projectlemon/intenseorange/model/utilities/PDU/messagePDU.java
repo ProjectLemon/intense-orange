@@ -1,5 +1,7 @@
 package org.projectlemon.intenseorange.model.utilities.PDU;
 
+import org.projectlemon.intenseorange.model.utilities.helpers.ByteHelper;
+
 import java.io.InputStream;
 import java.util.Date;
 
@@ -17,12 +19,23 @@ public class MessagePDU extends PDU {
 
     public MessagePDU(String nickname, Date timestamp, String message){
         this.nickname=nickname;
-        this.timestamp = timestamp;
+        this.timestamp = new Date((timestamp.getTime()/1000)*1000);
         this.message = message;
     }
 
     @Override
     public byte[] toByteArray() {
-        return new byte[0];
+        ByteHelper helper  = new ByteHelper();
+        byte[] nicknameAsBytes = nickname.getBytes();
+        byte[] messageAsBytes = message.getBytes();
+        helper.addByte(PDUIdentifier.MESSAGE.value);
+        helper.addByte((byte) messageAsBytes.length);
+        helper.addByte((byte) nicknameAsBytes.length);
+        helper.pad();
+        helper.addInt((int)(timestamp.getTime()/1000));
+        helper.addByte(nicknameAsBytes);
+        helper.addByte(messageAsBytes);
+        helper.pad();
+        return helper.toByteArray();
     }
 }

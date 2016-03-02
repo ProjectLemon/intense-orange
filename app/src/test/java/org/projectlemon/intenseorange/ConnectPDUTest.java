@@ -1,7 +1,7 @@
 package org.projectlemon.intenseorange;
 
 import org.junit.Test;
-import org.projectlemon.intenseorange.model.utilities.PDU.connectPDU;
+import org.projectlemon.intenseorange.model.utilities.PDU.ConnectPDU;
 
 /**
  * Created by Jenny on 2016-01-20.

@@ -79,8 +79,11 @@ public class StartScreen extends Screen {
     protected void onResume() {
         super.onResume();
         availableServers = client.getAvailableServers();
-        detecter.notifyServerChange(availableServers);
         registerReceiver(client.receiver, client.intentFilter);
+
+        nearbyServers = storedData.getStringSet("nearbyServers", new HashSet<String>());
+        nearbyServers.addAll(availableServers.keySet());
+        detecter.notifyServerChange(nearbyServers);
     }
 
 
@@ -96,8 +99,12 @@ public class StartScreen extends Screen {
         super.onStop();
         debug.log("onStop()");
 
+        availableServers = client.getAvailableServers();
+        nearbyServers = storedData.getStringSet("nearbyServers", new HashSet<String>());
+        nearbyServers.addAll(availableServers.keySet());
+
         SharedPreferences.Editor ed = storedData.edit();
         ed.putStringSet("nearbyServers", nearbyServers);
-        ed.commit();
+        ed.apply();
     }
 }

@@ -1,6 +1,5 @@
 package org.projectlemon.intenseorange.model.utilities.PDU;
 
-import org.eclipse.mat.parser.index.IndexWriter;
 import org.projectlemon.intenseorange.model.utilities.helpers.ByteHelper;
 
 import java.io.InputStream;
